@@ -1,36 +1,24 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "E-commerce backend API",
-  "main": "src/server.js",
-  "directories": {
-    "test": "tests"
+  "name": "nexaspark-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
   },
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js",
-    "test": "jest --runInBand",
-    "seed": "node src/seed/seedProducts.js"
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "test": "node --test"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^3.0.3",
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.6",
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1",
-    "express-validator": "^7.3.2",
-    "helmet": "^8.1.0",
-    "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.4.1",
-    "morgan": "^1.10.1",
-    "stripe": "^22.0.2"
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "mongoose": "^8.9.5"
   },
   "devDependencies": {
-    "jest": "^30.3.0",
-    "nodemon": "^3.1.14",
-    "supertest": "^7.2.2"
+    "supertest": "^7.0.0"
   }
 }

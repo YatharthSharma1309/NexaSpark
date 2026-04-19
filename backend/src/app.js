@@ -1,36 +1,25 @@
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const morgan = require("morgan");
-const authRoutes = require("./routes/authRoutes");
-const productRoutes = require("./routes/productRoutes");
-const cartRoutes = require("./routes/cartRoutes");
-const orderRoutes = require("./routes/orderRoutes");
-const reviewRoutes = require("./routes/reviewRoutes");
-const errorHandler = require("./middleware/errorHandler");
-const env = require("./config/env");
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
 
 const app = express();
 
+const clientOrigin = process.env.CLIENT_ORIGIN;
+app.use(
+  cors({
+    origin: clientOrigin || true,
+    credentials: Boolean(clientOrigin),
+  })
+);
 app.use(helmet());
-app.use(cors({ origin: env.clientUrl, credentials: false }));
 app.use(express.json());
-app.use(morgan("dev"));
 
-app.get("/api/health", (req, res) => {
-  res.json({ success: true, message: "API is healthy" });
+app.get('/api/health', (_req, res) => {
+  res.json({
+    status: 'ok',
+    service: 'nexaspark-api',
+    time: new Date().toISOString(),
+  });
 });
 
-app.use("/api/auth", authRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/cart", cartRoutes);
-app.use("/api/orders", orderRoutes);
-app.use("/api/reviews", reviewRoutes);
-
-app.use((req, res) => {
-  res.status(404).json({ success: false, message: "Route not found" });
-});
-
-app.use(errorHandler);
-
-module.exports = app;
+export default app;

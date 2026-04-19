@@ -1,69 +1,62 @@
-# Ecommerce Website (MVP)
+# NexaSpark
 
-This repository contains a full-stack e-commerce MVP implementation aligned with the roadmap in `Project.md`.
+Electronics-focused ecommerce (see [NexaSpark.md](./NexaSpark.md) for product scope and roadmap).
 
-## Tech Stack
-- Frontend: HTML/CSS/JavaScript (`frontend/public`)
-- Backend: Node.js + Express (`backend/src`)
-- Database: MongoDB (Mongoose models)
-- Auth: JWT bearer tokens
-- Payments: Stripe-compatible payment intent service with local mock fallback
+## Prerequisites
 
-## Features Implemented
-- Product catalog APIs with search, filter, sort, and pagination.
-- Product detail endpoint with recent reviews and recommendations.
-- Authentication: sign up, log in, profile endpoint, purchase history.
-- Cart management: add/update/remove/list cart items with stock checks.
-- Checkout flow: order creation, totals, payment intent, stock deduction.
-- Orders: list orders and order detail.
-- Reviews: verified-buyer rating/comment submission with aggregate product ratings.
-- Security middleware: helmet, CORS, request validation, centralized error handling.
-- CI test workflow and baseline automated test.
+- **Node.js** 18 or newer  
+- **MongoDB** locally or a connection string (optional for health checks; required once data models are in use)
 
-## Project Structure
-- `backend/src/config`: environment and database setup.
-- `backend/src/models`: core data models (`User`, `Product`, `Cart`, `Order`, `Review`).
-- `backend/src/controllers`: API handlers.
-- `backend/src/routes`: API route wiring.
-- `backend/src/services`: payment and recommendation logic.
-- `backend/tests`: API tests.
-- `frontend/public`: storefront UI.
+## Repository layout
 
-## Setup
-1. Install backend dependencies:
-   - `cd backend`
-   - `npm install`
-2. Create environment file:
-   - Copy `backend/.env.example` to `backend/.env`
-   - Fill `MONGODB_URI`, `JWT_SECRET`, and optional `STRIPE_SECRET_KEY`
-3. Seed sample products:
-   - `npm run seed`
-4. Start backend:
-   - `npm run dev`
-5. Serve frontend:
-   - Open `frontend/public/index.html` in a local static server (for example VS Code Live Server).
+| Path | Purpose |
+|------|---------|
+| `backend/` | REST API (Express, Mongoose) |
+| `frontend/public/` | Static storefront (HTML/CSS/JS) |
+| `.github/workflows/` | CI |
 
-## API Endpoints
-- `GET /api/health`
-- `POST /api/auth/signup`
-- `POST /api/auth/login`
-- `GET /api/auth/me`
-- `GET /api/auth/history`
-- `GET /api/products`
-- `GET /api/products/:id`
-- `GET /api/cart`
-- `POST /api/cart/items`
-- `PATCH /api/cart/items/:productId`
-- `DELETE /api/cart/items/:productId`
-- `POST /api/orders/checkout`
-- `POST /api/orders/payment-status`
-- `GET /api/orders`
-- `GET /api/orders/:id`
-- `POST /api/reviews/:productId`
+## Quick start
 
-## Deployment Notes
-- Add production environment variables in your host platform.
-- Restrict CORS origin via `CLIENT_URL`.
-- Use managed MongoDB and secure network rules.
-- Replace mock payment fallback with live Stripe keys in production.
-- Extend CI with lint and integration tests before release.
+### 1. Backend API
+
+```bash
+cd backend
+cp .env.example .env
+```
+
+Edit `.env`: set `JWT_SECRET`, and `MONGODB_URI` if you run MongoDB.
+
+```bash
+npm install
+npm run dev
+```
+
+- API base: `http://127.0.0.1:4000` (unless `PORT` is set)  
+- Health: `GET /api/health`
+
+```bash
+npm test
+```
+
+### 2. Frontend (static)
+
+Serve `frontend/public` with any static file server, for example:
+
+```bash
+npx --yes serve frontend/public -p 8080
+```
+
+Open `http://127.0.0.1:8080`. The home page can call the API health endpoint; ensure `CLIENT_ORIGIN` in `backend/.env` matches your frontend origin (default example uses port `8080`).
+
+## Environment variables
+
+Copy from `backend/.env.example`. Key variables:
+
+- `PORT` — API port  
+- `MONGODB_URI` — MongoDB connection string (omit only for quick API-only checks)  
+- `CLIENT_ORIGIN` — CORS origin for the browser UI  
+- `DEFAULT_COUNTRY`, `DEFAULT_CURRENCY`, `LOCALE` — regional defaults per [NexaSpark.md](./NexaSpark.md)
+
+## CI
+
+GitHub Actions runs `npm ci` and `npm test` in `backend/` on push and pull requests to `main` / `master`.
