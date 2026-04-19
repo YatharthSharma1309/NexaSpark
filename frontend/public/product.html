@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Product details, specs, reviews, and add to cart on NexaSpark." />
+    <meta name="theme-color" content="#0f1419" />
+    <title>Product — NexaSpark</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+      <a class="brand" href="/">NexaSpark</a>
+      <p class="tagline">Product detail</p>
+    </header>
+    <main id="main-content" class="main main--wide" tabindex="-1">
+      <p id="product-status" class="store-status" role="status"></p>
+      <div id="product-root"></div>
+
+      <section class="card pdp-actions">
+        <h2>Purchase</h2>
+        <div class="buy-row">
+          <label>Qty <input type="number" id="qty-input" min="1" value="1" class="input-narrow" /></label>
+          <button type="button" id="add-to-cart">Add to cart</button>
+          <button type="button" class="btn-secondary" id="wishlist-toggle">Wishlist</button>
+        </div>
+        <p class="muted">Sign in on the home page to use the cart.</p>
+      </section>
+
+      <section class="card">
+        <h2>Reviews</h2>
+        <div id="reviews-list" class="reviews-list"></div>
+        <div id="review-form" hidden>
+          <h3>Write a review</h3>
+          <div class="form-grid">
+            <label>Rating
+              <select id="review-rating">
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+              </select>
+            </label>
+            <label>Title<input type="text" id="review-title" maxlength="200" /></label>
+          </div>
+          <label class="block-label">Body<textarea id="review-body" rows="3" maxlength="4000"></textarea></label>
+          <button type="button" id="review-submit">Submit review</button>
+        </div>
+      </section>
+
+      <section class="card dev-card">
+        <p><button type="button" id="health-check-pdp" class="btn-secondary">Check API health</button></p>
+        <pre id="health-output-pdp" class="output" hidden></pre>
+      </section>
+    </main>
+    <script src="/js/product.js" type="module"></script>
+  </body>
+</html>

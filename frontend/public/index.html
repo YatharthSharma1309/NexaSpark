@@ -3,31 +3,119 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="NexaSpark electronics storefront — browse, compare specs, cart, and secure checkout."
+    />
+    <meta name="theme-color" content="#0f1419" />
     <title>NexaSpark — Electronics</title>
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <header class="site-header">
-      <div class="brand">NexaSpark</div>
-      <p class="tagline">Electronics storefront (scaffold)</p>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header site-header--store">
+      <div class="site-header__row">
+        <div>
+          <a class="brand" href="/">NexaSpark</a>
+          <p class="tagline">Electronics — browse, compare, checkout</p>
+        </div>
+        <nav class="site-nav">
+          <a href="/orders.html">Orders</a>
+          <span class="cart-link">
+            <a href="/wishlist.html">Wishlist</a>
+            <strong id="wishlist-count" class="pill" hidden></strong>
+          </span>
+          <a href="/admin.html" id="nav-admin" hidden>Admin</a>
+          <span class="cart-link"><a href="#cart">Cart</a> <strong id="cart-count" class="pill" hidden></strong></span>
+          <button type="button" class="btn-secondary" id="compare-open" disabled>Compare</button>
+        </nav>
+      </div>
+      <div class="toolbar">
+        <input type="search" id="filter-q" placeholder="Search title, SKU…" class="input-grow" />
+        <select id="filter-subcategory" aria-label="Subcategory"></select>
+        <select id="filter-condition" aria-label="Condition">
+          <option value="">Any condition</option>
+          <option value="new">New</option>
+          <option value="refurbished">Refurbished</option>
+          <option value="open_box">Open box</option>
+        </select>
+        <select id="filter-sort" aria-label="Sort">
+          <option value="newest">Newest</option>
+          <option value="price_asc">Price ↑</option>
+          <option value="price_desc">Price ↓</option>
+        </select>
+        <button type="button" id="filter-apply">Apply</button>
+      </div>
     </header>
-    <main class="main">
-      <section class="card">
-        <h1>Welcome</h1>
-        <p>
-          Static shell for the web UI. Point the API at <code>/api/health</code> on the backend
-          (default <code>http://127.0.0.1:4000</code>).
+
+    <main id="main-content" class="main main--wide" tabindex="-1">
+      <p id="store-status" class="store-status" role="status"></p>
+      <section id="product-grid" class="product-grid" aria-label="Products"></section>
+
+      <section id="cart-section" class="card cart-panel">
+        <h2 id="cart">Cart</h2>
+        <p class="muted">Cart requires a signed-in account. <button type="button" class="linklike" data-scroll-auth>Sign in below</button>.</p>
+        <div id="cart-lines" class="cart-lines"></div>
+        <div class="coupon-row">
+          <label class="coupon-row__field"
+            >Coupon code
+            <input
+              type="text"
+              id="cart-coupon"
+              placeholder="e.g. SAVE10"
+              autocomplete="off"
+              maxlength="32"
+              aria-describedby="coupon-hint"
+            />
+          </label>
+          <button type="button" class="btn-secondary" id="coupon-apply">Apply</button>
+        </div>
+        <p id="coupon-hint" class="muted small-print"></p>
+        <p class="cart-actions">
+          <button type="button" id="checkout-btn" disabled>Complete order (stub)</button>
+          <button type="button" class="btn-secondary" id="stripe-pay" disabled>Pay with Stripe</button>
         </p>
-        <p>
-          <button type="button" id="health-check">Check API health</button>
-        </p>
+        <p class="muted small-print">Stripe requires API keys and the Stripe CLI (or dashboard) forwarding webhooks to <code>/api/webhooks/stripe</code>.</p>
+      </section>
+
+      <section id="auth-panel" class="card auth-panel">
+        <h2>Account</h2>
+        <p id="auth-user-label" class="muted">Guest</p>
+        <div class="form-grid">
+          <label>Email<input type="email" id="auth-email" autocomplete="username" /></label>
+          <label>Password<input type="password" id="auth-password" autocomplete="current-password" /></label>
+          <label>Name (signup)<input type="text" id="auth-name" autocomplete="name" /></label>
+        </div>
+        <div class="form-actions">
+          <button type="button" id="auth-login">Log in</button>
+          <button type="button" id="auth-signup" class="btn-secondary">Sign up</button>
+          <button type="button" id="auth-logout" class="btn-secondary" hidden>Log out</button>
+        </div>
+      </section>
+
+      <section class="card dev-card">
+        <h2>Developer</h2>
+        <p>API default <code>http://127.0.0.1:4000</code> — set CORS <code>CLIENT_ORIGIN</code> to this site’s origin.</p>
+        <p><button type="button" id="health-check" class="btn-secondary">Check API health</button></p>
         <pre id="health-output" class="output" hidden></pre>
       </section>
+
       <nav class="legal">
         <a href="/privacy.html">Privacy</a>
         <a href="/terms.html">Terms</a>
       </nav>
     </main>
+
+    <div id="compare-modal" class="modal" hidden role="dialog" aria-modal="true" aria-label="Compare products">
+      <div class="modal__panel card">
+        <div class="modal__head">
+          <h2>Compare</h2>
+          <button type="button" class="btn-secondary" id="compare-close">Close</button>
+        </div>
+        <div id="compare-body" class="modal__body"></div>
+      </div>
+    </div>
+
     <script src="/js/app.js" type="module"></script>
   </body>
 </html>
