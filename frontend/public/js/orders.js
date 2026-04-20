@@ -13,14 +13,18 @@ function setStatus(message, isError = false) {
 async function load() {
   if (!root) return;
   if (!getToken()) {
+    root.removeAttribute('aria-busy');
     root.innerHTML =
       '<p class="muted">Sign in from the <a href="/">home page</a> to see your orders.</p>';
     return;
   }
-  setStatus('Loading…');
+  root.innerHTML = '<p class="muted">Loading orders…</p>';
+  root.setAttribute('aria-busy', 'true');
+  setStatus('');
   try {
     const data = /** @type {{ orders: any[] }} */ (await api('/api/orders'));
     const orders = data.orders;
+    root.removeAttribute('aria-busy');
     root.innerHTML = orders.length
       ? orders
           .map((o) => {
@@ -36,7 +40,11 @@ async function load() {
       : '<p class="muted">No orders yet.</p>';
     setStatus('');
   } catch (e) {
-    setStatus(e instanceof Error ? e.message : 'Failed to load orders', true);
+    root.removeAttribute('aria-busy');
+    const msg = e instanceof Error ? e.message : 'Failed to load orders';
+    setStatus(msg, true);
+    root.innerHTML = `<p role="alert">${msg}</p><p><button type="button" class="btn-secondary" id="orders-retry">Retry</button></p>`;
+    document.getElementById('orders-retry')?.addEventListener('click', () => load());
   }
 }
 

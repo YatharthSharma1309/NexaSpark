@@ -1,0 +1,3 @@
+# Allow crawlers; tighten for staging by serving a different robots.txt there.
+User-agent: *
+Allow: /

@@ -23,7 +23,7 @@ How to use this file: **Team lead** updates priorities; role owners tick work wh
 | [x] | Public config + legal footer wiring (`legalLinks.js`, `/api/public/config`). |
 | [x] | Deploy-time API base via `window.__NEXASPARK_API_BASE__` (GitHub Actions prep). |
 | [x] | Branded **404** page for static hosting (`404.html`). |
-| [ ] | Loading/empty/error states audit on orders, wishlist, product detail (polish). |
+| [x] | Loading / empty / error + **Retry** on orders, wishlist, product detail. |
 | [ ] | A11y pass: focus order on modals, form labels, contrast on primary actions. |
 | [ ] | Optional: product listing SEO (`<title>` / meta per route) when/if build step is introduced. |
 
@@ -34,7 +34,7 @@ How to use this file: **Team lead** updates priorities; role owners tick work wh
 | Status | Task |
 |--------|------|
 | [x] | `GET /api/public/config` for non-secret storefront defaults. |
-| [ ] | Hosted API URL + `CLIENT_ORIGIN` matching Pages URL (operator checklist in README). |
+| [ ] | Hosted API URL + `CLIENT_ORIGIN` matching Pages URL (see [`runbook.md`](./runbook.md)). |
 | [ ] | Stripe live keys + webhook endpoint hardening review before real charges. |
 | [ ] | SMTP for real order emails when launching (optional `notify` path already exists). |
 
@@ -56,7 +56,8 @@ How to use this file: **Team lead** updates priorities; role owners tick work wh
 |--------|------|
 | [ ] | Define launch KPIs (conversion, AOV, refund rate) and baseline. |
 | [ ] | Human review of privacy/terms copy; set `PRIVACY_POLICY_URL` / `TERMS_OF_SERVICE_URL`. |
-| [ ] | Returns/support contact visible before positioning as “production ready.” |
+| [x] | Support link in footer via `SUPPORT_URL` / `SUPPORT_EMAIL` (`GET /api/public/config`). |
+| [ ] | Returns policy + human-reviewed legal copy before positioning as “production ready.” |
 
 ---
 
@@ -65,7 +66,7 @@ How to use this file: **Team lead** updates priorities; role owners tick work wh
 | Status | Task |
 |--------|------|
 | [x] | GitHub Pages deploy job after CI success on `main` / `master`. |
-| [ ] | MongoDB backup cadence + restore drill (operator runbook one-pager). |
+| [x] | MongoDB backup + restore drill documented ([`runbook.md`](./runbook.md) §5). |
 | [ ] | Recommendations/search: measure before adding ML; keep co-purchase rules until data supports more. |
 
 ---

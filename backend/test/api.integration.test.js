@@ -393,19 +393,29 @@ describe('API integration', () => {
   it('exposes public config for storefront (legal URLs and region defaults)', async () => {
     const prevP = process.env.PRIVACY_POLICY_URL;
     const prevT = process.env.TERMS_OF_SERVICE_URL;
+    const prevSUrl = process.env.SUPPORT_URL;
+    const prevSEm = process.env.SUPPORT_EMAIL;
     process.env.PRIVACY_POLICY_URL = 'https://example.com/privacy';
     process.env.TERMS_OF_SERVICE_URL = 'https://example.com/terms';
+    process.env.SUPPORT_URL = 'https://example.com/help';
+    process.env.SUPPORT_EMAIL = 'help@example.com';
     try {
       const res = await request(app).get('/api/public/config');
       assert.strictEqual(res.status, 200);
       assert.strictEqual(res.body.privacyPolicyUrl, 'https://example.com/privacy');
       assert.strictEqual(res.body.termsOfServiceUrl, 'https://example.com/terms');
+      assert.strictEqual(res.body.supportUrl, 'https://example.com/help');
+      assert.strictEqual(res.body.supportEmail, 'help@example.com');
       assert.ok('defaultCurrency' in res.body);
     } finally {
       if (prevP === undefined) delete process.env.PRIVACY_POLICY_URL;
       else process.env.PRIVACY_POLICY_URL = prevP;
       if (prevT === undefined) delete process.env.TERMS_OF_SERVICE_URL;
       else process.env.TERMS_OF_SERVICE_URL = prevT;
+      if (prevSUrl === undefined) delete process.env.SUPPORT_URL;
+      else process.env.SUPPORT_URL = prevSUrl;
+      if (prevSEm === undefined) delete process.env.SUPPORT_EMAIL;
+      else process.env.SUPPORT_EMAIL = prevSEm;
     }
   });
 

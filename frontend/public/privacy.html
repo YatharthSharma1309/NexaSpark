@@ -20,6 +20,16 @@
         <code>PRIVACY_POLICY_URL</code> in production.
       </p>
       <p><a href="/">Back to home</a></p>
+
+      <nav class="legal">
+        <a href="/privacy.html" data-legal="privacy">Privacy</a>
+        <a href="/terms.html" data-legal="terms">Terms</a>
+        <a href="#" data-footer="support" hidden>Support</a>
+      </nav>
     </main>
+    <script type="module">
+      import { applyLegalFooterLinks } from '/js/legalLinks.js';
+      applyLegalFooterLinks();
+    </script>
   </body>
 </html>

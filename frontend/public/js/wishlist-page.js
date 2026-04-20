@@ -13,14 +13,18 @@ function setStatus(message, isError = false) {
 async function load() {
   if (!root) return;
   if (!getToken()) {
+    root.removeAttribute('aria-busy');
     root.innerHTML =
       '<p class="muted">Sign in from the <a href="/">home page</a> to see your wishlist.</p>';
     return;
   }
-  setStatus('Loading…');
+  root.innerHTML = '<p class="muted">Loading wishlist…</p>';
+  root.setAttribute('aria-busy', 'true');
+  setStatus('');
   try {
     const data = await getWishlist();
     const items = data.wishlist.items;
+    root.removeAttribute('aria-busy');
     if (!items.length) {
       root.innerHTML = '<p class="muted">Your wishlist is empty.</p>';
       setStatus('');
@@ -54,7 +58,11 @@ async function load() {
     });
     setStatus('');
   } catch (e) {
-    setStatus(e instanceof Error ? e.message : 'Failed to load wishlist', true);
+    root.removeAttribute('aria-busy');
+    const msg = e instanceof Error ? e.message : 'Failed to load wishlist';
+    setStatus(msg, true);
+    root.innerHTML = `<p role="alert">${msg}</p><p><button type="button" class="btn-secondary" id="wishlist-retry">Retry</button></p>`;
+    document.getElementById('wishlist-retry')?.addEventListener('click', () => load());
   }
 }
 

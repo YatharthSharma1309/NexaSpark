@@ -15,7 +15,7 @@ Electronics-focused ecommerce (canonical blueprint: [NexaSpark.md](./NexaSpark.m
 | `frontend/public/` | Static storefront + admin console |
 | `mobile/` | Expo (React Native) app — same JSON API as web |
 | `docker-compose.yml` | MongoDB + API containers |
-| `docs/` | Team sprint plan ([`team-sprint.md`](./docs/team-sprint.md)) |
+| `docs/` | Sprint plan ([`team-sprint.md`](./docs/team-sprint.md)), ops ([`runbook.md`](./docs/runbook.md)) |
 | `.github/workflows/` | CI — backend tests + **mobile** `typecheck` |
 | `.github/dependabot.yml` | Weekly npm updates (`backend/`, `mobile/`); monthly Actions |
 
@@ -86,6 +86,7 @@ API listens on **4000**, MongoDB on **27017**. Point `CLIENT_ORIGIN` at wherever
 
 ## Operations
 
+- **Runbook:** production API, Pages, Stripe, SMTP, backups, incidents — [`docs/runbook.md`](./docs/runbook.md).
 - **Request correlation:** every response includes `X-Request-Id`; the API logs one JSON line per request (method, path, status, duration).  
 - **Rate limits:** authentication and checkout endpoints are limited in production mode (`express-rate-limit`; disabled when `NODE_ENV=test`).  
 - **Admin API:** `GET/POST /api/admin/products`, `PUT/DELETE /api/admin/products/:id`, `GET /api/admin/orders`, `PATCH /api/admin/orders/:id`, `GET/POST /api/admin/coupons`, `PATCH /api/admin/coupons/:id`, `GET /api/admin/analytics/summary` — requires `User.role === 'admin'` (bootstrap via seed env vars).
@@ -99,6 +100,7 @@ Copy from `backend/.env.example`. Important keys:
 - `DEFAULT_COUNTRY`, `DEFAULT_CURRENCY`, `LOCALE`  
 - `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (optional); optional **`STRIPE_APP_SUCCESS_URL`** / **`STRIPE_APP_CANCEL_URL`** when overriding native return URLs  
 - `SEED_ADMIN_EMAIL`, `SEED_ADMIN_PASSWORD` (optional seed)  
+- `PRIVACY_POLICY_URL`, `TERMS_OF_SERVICE_URL`, `SUPPORT_URL`, `SUPPORT_EMAIL` (optional — surfaced via `GET /api/public/config` for the storefront footer)  
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` (optional — order notifications)
 
 ## Mobile (Expo scaffold)

@@ -70,6 +70,8 @@ async function load() {
     return;
   }
 
+  root.innerHTML = '<p class="muted">Loading product…</p>';
+  root.setAttribute('aria-busy', 'true');
   setStatus('Loading…');
   try {
     const [tax, prod, revs] = await Promise.all([
@@ -119,9 +121,16 @@ async function load() {
     }
 
     await syncWishlistButton();
+    root.removeAttribute('aria-busy');
     setStatus('');
   } catch (e) {
-    setStatus(e instanceof Error ? e.message : 'Failed to load product', true);
+    const msg = e instanceof Error ? e.message : 'Failed to load product';
+    setStatus(msg, true);
+    if (root) {
+      root.removeAttribute('aria-busy');
+      root.innerHTML = `<p role="alert">${msg}</p><p><button type="button" class="btn-secondary" id="product-retry">Retry</button></p>`;
+      document.getElementById('product-retry')?.addEventListener('click', () => load());
+    }
   }
 }
 
