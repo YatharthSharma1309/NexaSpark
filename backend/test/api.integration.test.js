@@ -390,6 +390,25 @@ describe('API integration', () => {
     assert.ok(Array.isArray(res.body.topSkus));
   });
 
+  it('exposes public config for storefront (legal URLs and region defaults)', async () => {
+    const prevP = process.env.PRIVACY_POLICY_URL;
+    const prevT = process.env.TERMS_OF_SERVICE_URL;
+    process.env.PRIVACY_POLICY_URL = 'https://example.com/privacy';
+    process.env.TERMS_OF_SERVICE_URL = 'https://example.com/terms';
+    try {
+      const res = await request(app).get('/api/public/config');
+      assert.strictEqual(res.status, 200);
+      assert.strictEqual(res.body.privacyPolicyUrl, 'https://example.com/privacy');
+      assert.strictEqual(res.body.termsOfServiceUrl, 'https://example.com/terms');
+      assert.ok('defaultCurrency' in res.body);
+    } finally {
+      if (prevP === undefined) delete process.env.PRIVACY_POLICY_URL;
+      else process.env.PRIVACY_POLICY_URL = prevP;
+      if (prevT === undefined) delete process.env.TERMS_OF_SERVICE_URL;
+      else process.env.TERMS_OF_SERVICE_URL = prevT;
+    }
+  });
+
   it('finds products via text-capable search', async () => {
     const Product = (await import('../src/models/Product.js')).default;
     await Product.create({

@@ -12,6 +12,7 @@ import {
   toggleWishlistProduct,
   API_BASE,
 } from './api.js';
+import { applyLegalFooterLinks } from './legalLinks.js';
 
 const grid = document.getElementById('product-grid');
 const statusEl = document.getElementById('store-status');
@@ -476,6 +477,7 @@ cartSection?.querySelector('[data-scroll-auth]')?.addEventListener('click', () =
 });
 
 (async function init() {
+  applyLegalFooterLinks();
   syncCouponUi();
   updateCompareButton();
   refreshAuthUi();

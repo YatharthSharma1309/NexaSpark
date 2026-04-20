@@ -1,4 +1,5 @@
 import { getToken, setWishlistProductIds, getWishlist } from './api.js';
+import { applyLegalFooterLinks } from './legalLinks.js';
 
 const root = document.getElementById('wishlist-root');
 const statusEl = document.getElementById('wishlist-status');
@@ -57,4 +58,5 @@ async function load() {
   }
 }
 
+applyLegalFooterLinks();
 load();

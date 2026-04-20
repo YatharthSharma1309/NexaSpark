@@ -1,4 +1,5 @@
 import { api, getToken, getUser } from './api.js';
+import { applyLegalFooterLinks } from './legalLinks.js';
 
 const statusEl = document.getElementById('admin-status');
 const productsBody = document.querySelector('#products-table tbody');
@@ -199,6 +200,7 @@ document.getElementById('p-create')?.addEventListener('click', async () => {
 });
 
 (async function init() {
+  applyLegalFooterLinks();
   if (!ensureAdmin()) return;
   try {
     await loadProducts();

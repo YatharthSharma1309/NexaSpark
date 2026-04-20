@@ -1,5 +1,10 @@
-/** Backend origin — must match `CLIENT_ORIGIN` CORS in `backend/.env`. */
-export const API_BASE = 'http://127.0.0.1:4000';
+/**
+ * Backend origin — must match `CLIENT_ORIGIN` CORS in `backend/.env`.
+ * GitHub Pages deploy can set `window.__NEXASPARK_API_BASE__` before modules load.
+ */
+const DEFAULT_API = 'http://127.0.0.1:4000';
+export const API_BASE =
+  (typeof window !== 'undefined' && window.__NEXASPARK_API_BASE__) || DEFAULT_API;
 
 const TOKEN_KEY = 'nexaspark_token';
 const USER_KEY = 'nexaspark_user';

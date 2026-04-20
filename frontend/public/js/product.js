@@ -1,4 +1,5 @@
 import { api, addToCart, getToken, getWishlist, toggleWishlistProduct, API_BASE } from './api.js';
+import { applyLegalFooterLinks } from './legalLinks.js';
 
 const statusEl = document.getElementById('product-status');
 const root = document.getElementById('product-root');
@@ -188,4 +189,5 @@ document.getElementById('health-check-pdp')?.addEventListener('click', async () 
   }
 });
 
+applyLegalFooterLinks();
 load();

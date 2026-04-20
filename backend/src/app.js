@@ -14,6 +14,7 @@ import adminRouter from './routes/admin/index.js';
 import stripeCheckoutRouter from './routes/stripeCheckout.js';
 import { stripeWebhook } from './routes/stripeWebhook.js';
 import wishlistRouter from './routes/wishlist.js';
+import publicConfigRouter from './routes/publicConfig.js';
 
 const app = express();
 
@@ -46,6 +47,8 @@ app.get('/api/health', (_req, res) => {
     time: new Date().toISOString(),
   });
 });
+
+app.use('/api/public', publicConfigRouter);
 
 app.use('/api/auth', authRouterLimiter, authRouter);
 app.use('/api/taxonomy', taxonomyRouter);

@@ -1,4 +1,5 @@
 import { api, getToken } from './api.js';
+import { applyLegalFooterLinks } from './legalLinks.js';
 
 const root = document.getElementById('orders-root');
 const statusEl = document.getElementById('orders-status');
@@ -39,4 +40,5 @@ async function load() {
   }
 }
 
+applyLegalFooterLinks();
 load();

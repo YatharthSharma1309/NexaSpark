@@ -18,6 +18,10 @@ Electronics-focused ecommerce (canonical blueprint: [NexaSpark.md](./NexaSpark.m
 | `.github/workflows/` | CI — backend tests + **mobile** `typecheck` |
 | `.github/dependabot.yml` | Weekly npm updates (`backend/`, `mobile/`); monthly Actions |
 
+## How we work (virtual team)
+
+NexaSpark uses a **six-role virtual team** (Frontend, Backend, Team lead, Tester, Market analyst, ML/systems) for ownership and handoffs. **New slices:** summarize plan, scope, and risks; state what is **out of scope**; obtain **stakeholder approval** before implementation (see [`.cursor/rules/nexaspark-team.mdc`](.cursor/rules/nexaspark-team.mdc)). That document also defines the **monetization-after-build** bar and coordination defaults (e.g. money path → Backend + Tester).
+
 ## Quick start (local Node)
 
 ### 1. Backend API
@@ -114,3 +118,15 @@ GitHub Actions runs **`backend`**: `npm ci` and `npm test` (`NODE_ENV=test`), an
 cd backend && npm test
 cd ../mobile && npm run typecheck
 ```
+
+## Deploy storefront (GitHub Pages)
+
+After **backend** and **mobile** jobs succeed on a push to **`main`** or **`master`**, the workflow builds `frontend/public` into `_site` (see `scripts/prep-gh-pages.py`) and deploys it with **GitHub Pages** (CDN-backed).
+
+1. In the repository: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+2. Push to `main` / `master`. The **CI** workflow uploads the `_site` artifact and runs **Deploy to GitHub Pages**.
+3. **Repository variables** (Settings → Secrets and variables → Actions → Variables), optional:
+   - **`PUBLIC_API_BASE_URL`** — HTTPS origin of your live API (no trailing slash), e.g. `https://api.example.com`. Injected as `window.__NEXASPARK_API_BASE__` so the static site calls that host instead of `http://127.0.0.1:4000`. Set **`CLIENT_ORIGIN`** on the API to your Pages URL (and CORS) when using a real backend.
+   - **`PAGES_BASE_PREFIX`** — Leave unset to use the default **`/<repository-name>/`** path (standard project site URL `https://<user>.github.io/<repo>/`). Set to **`/`** for a **root** site (e.g. `username.github.io` user repo or a **custom domain** at `/`) so asset links are not prefixed.
+
+The generated `_site` folder is gitignored; run `python scripts/prep-gh-pages.py` locally only when testing (set `GITHUB_REPOSITORY=owner/repo`).
