@@ -2,7 +2,7 @@
 
 **Single document:** This file replaces `Project.md`, `plan.md`, and `ELECTRONICS_PLAN.md`. Treat it as the **canonical** product and delivery plan. Update it when scope or status changes, and commit with related work.
 
-**Last updated:** 2026-04-19
+**Last updated:** 2026-04-20
 
 **Repository note:** **`backend/`** ships the NexaSpark REST API (auth JWT + roles, catalog, cart, orders, reviews, compare, taxonomy, admin, Stripe Checkout + webhook, coupons, analytics hooks, taxonomy cache, text search, rate limits, structured request logs). **`frontend/public/`** is the static storefront + admin console. **`mobile/`** is the **Expo** Phase **M** client (same JSON API). **`docker-compose.yml`** runs **MongoDB + API**. CI: **`.github/workflows/ci.yml`**; dependency PRs: **`.github/dependabot.yml`**. Remote: **`https://github.com/YatharthSharma1309/NexaSpark`**. **Part 2 (React Native)** — `mobile/`: **feature-complete for in-repo Phase M** (auth, catalog, PDP with wishlist/reviews/recommendations, wishlist screen, cart, stub + Stripe, orders). **Phase M-2** (store accounts, EAS/release builds, listings) is **operator-run** — see §5 **M-2 checklist** (`mobile/eas.json` stub for EAS).
 

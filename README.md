@@ -15,12 +15,15 @@ Electronics-focused ecommerce (canonical blueprint: [NexaSpark.md](./NexaSpark.m
 | `frontend/public/` | Static storefront + admin console |
 | `mobile/` | Expo (React Native) app — same JSON API as web |
 | `docker-compose.yml` | MongoDB + API containers |
+| `docs/` | Team sprint plan ([`team-sprint.md`](./docs/team-sprint.md)) |
 | `.github/workflows/` | CI — backend tests + **mobile** `typecheck` |
 | `.github/dependabot.yml` | Weekly npm updates (`backend/`, `mobile/`); monthly Actions |
 
 ## How we work (virtual team)
 
 NexaSpark uses a **six-role virtual team** (Frontend, Backend, Team lead, Tester, Market analyst, ML/systems) for ownership and handoffs. **New slices:** summarize plan, scope, and risks; state what is **out of scope**; obtain **stakeholder approval** before implementation (see [`.cursor/rules/nexaspark-team.mdc`](.cursor/rules/nexaspark-team.mdc)). That document also defines the **monetization-after-build** bar and coordination defaults (e.g. money path → Backend + Tester).
+
+**Current sprint (tasks by role):** [`docs/team-sprint.md`](./docs/team-sprint.md). Pull requests use [`.github/pull_request_template.md`](./.github/pull_request_template.md).
 
 ## Quick start (local Node)
 
