@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Browse products — NexaSpark." />
+    <meta name="theme-color" content="#2874f0" />
+    <title>Products — NexaSpark</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header site-header--marketplace">
+      <div class="header-sticky">
+        <div class="header__row header__row--primary">
+        <a class="brand brand--marketplace" href="index.html" aria-label="NexaSpark home">
+          <img
+            class="brand__mark"
+            src="assets/logo-nexaspark.svg"
+            width="40"
+            height="40"
+            alt=""
+          />
+          <span class="brand__text">
+            <span class="brand__name">NexaSpark</span>
+            <span class="brand__tagline">Explore</span>
+          </span>
+        </a>
+        <div class="header-location" role="group" aria-label="Delivery location">
+          <span class="header-location__pin" aria-hidden="true"></span>
+          <div class="header-location__stack">
+            <span class="header-location__label">Delivering to</span>
+            <span class="header-location__value">New Delhi 110002</span>
+            <button type="button" class="header-location__update">Update location</button>
+          </div>
+        </div>
+        <form class="header-search" role="search" action="products.html" method="get">
+          <label class="visually-hidden" for="plp-search-cat">Department</label>
+          <select id="plp-search-cat" name="cat" class="header-search__cat" aria-label="Search in department">
+            <option value="">All</option>
+            <option value="electronics">Electronics</option>
+            <option value="home">Home</option>
+            <option value="fashion">Fashion</option>
+          </select>
+          <label class="visually-hidden" for="filter-q">Search</label>
+          <input
+            id="filter-q"
+            type="search"
+            name="q"
+            class="header-search__input"
+            placeholder="Search products"
+            autocomplete="off"
+          />
+          <button type="submit" class="header-search__submit" aria-label="Search">
+            <span class="header-search__submit-icon" aria-hidden="true"></span>
+          </button>
+        </form>
+        <nav class="header-tools" aria-label="Account and cart">
+          <a href="#" class="header-tools__block header-tools__block--login">
+            <span class="header-tools__strong">Login</span>
+          </a>
+          <a href="#" class="header-tools__block header-tools__block--seller">
+            <span class="header-tools__strong">Become a Seller</span>
+          </a>
+          <a href="#" class="header-tools__block header-tools__block--more">
+            <span class="header-tools__strong">More</span>
+            <span class="header-tools__chev" aria-hidden="true"></span>
+          </a>
+          <a class="header-tools__cart cart-link" href="cart.html" aria-label="Shopping cart">
+            <span class="header-tools__cart-inner">
+              <span class="header-tools__cart-count" id="cart-count" hidden aria-live="polite"></span>
+              <span class="header-tools__cart-icon" aria-hidden="true"></span>
+              <span class="header-tools__cart-label">Cart</span>
+            </span>
+          </a>
+        </nav>
+        </div>
+      </div>
+      <div class="header__row header__row--subnav">
+        <nav class="header-subnav" aria-label="Shop by department">
+          <a class="header-subnav__all" href="products.html"><span class="header-subnav__burger" aria-hidden="true"></span> All</a>
+          <a href="products.html?cat=electronics">Electronics</a>
+          <a href="products.html?cat=home">Home &amp; Kitchen</a>
+          <a href="products.html?cat=fashion">Fashion</a>
+          <a href="products.html">Today’s deals</a>
+          <a href="help.html">Customer Service</a>
+          <a href="products.html">Bestsellers</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="plp-layout">
+      <aside class="filters" aria-label="Filters">
+        <h2>Filters</h2>
+        <label for="filter-cat">Category</label>
+        <select id="filter-cat">
+          <option value="">All</option>
+          <option value="electronics">Electronics</option>
+          <option value="home">Home</option>
+          <option value="fashion">Fashion</option>
+        </select>
+        <label for="filter-rating">Min rating</label>
+        <select id="filter-rating">
+          <option value="0">Any</option>
+          <option value="4">4★ & up</option>
+          <option value="4.5">4.5★ & up</option>
+        </select>
+        <label for="sort">Sort by</label>
+        <select id="sort">
+          <option value="pop">Popularity</option>
+          <option value="price-asc">Price: low to high</option>
+          <option value="price-desc">Price: high to low</option>
+          <option value="rating">Rating</option>
+        </select>
+      </aside>
+      <div>
+        <h1 class="section-title" style="margin-top: 0">Products</h1>
+        <div id="plp-grid" class="product-grid"></div>
+      </div>
+    </main>
+
+    <footer class="site-footer site-footer--marketplace">
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="help.html">Help Centre</a>
+        <a href="contact.html">Contact</a>
+        <a href="shipping-returns.html">Shipping &amp; Returns</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
+      <nav class="legal">
+        <span>© NexaSpark (demo)</span>
+        <a href="index.html">Home</a>
+        <a href="products.html">Shop</a>
+        <span>India · ₹ INR</span>
+      </nav>
+    </footer>
+
+    <script type="module" src="js/plp.js"></script>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Smartwatch">
+  <rect width="200" height="200" rx="16" fill="#e3f2fd"/>
+  <rect x="78" y="48" width="44" height="104" rx="16" fill="none" stroke="#2874f0" stroke-width="6"/>
+  <rect x="86" y="64" width="28" height="72" rx="4" fill="#1565c0"/>
+  <circle cx="100" cy="100" r="18" fill="#90caf9"/>
+  <path d="M100 40v-16M100 176v-16" stroke="#2874f0" stroke-width="8" stroke-linecap="round"/>
+</svg>

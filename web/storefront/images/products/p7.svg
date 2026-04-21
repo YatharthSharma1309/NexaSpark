@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Smart TV">
+  <rect width="200" height="200" rx="16" fill="#eceff1"/>
+  <rect x="36" y="40" width="128" height="88" rx="6" fill="#263238" stroke="#2874f0" stroke-width="4"/>
+  <rect x="48" y="52" width="104" height="64" rx="2" fill="#42a5f5"/>
+  <rect x="88" y="136" width="24" height="24" fill="#455a64"/>
+  <rect x="72" y="160" width="56" height="8" rx="2" fill="#455a64"/>
+</svg>

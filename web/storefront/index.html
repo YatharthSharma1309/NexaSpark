@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="NexaSpark — electronics marketplace UI (India, INR)." />
+    <meta name="theme-color" content="#2874f0" />
+    <title>NexaSpark — Home</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="page-home">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header site-header--marketplace">
+      <div class="header-sticky">
+        <div class="header__row header__row--primary">
+        <a class="brand brand--marketplace" href="index.html" aria-label="NexaSpark home">
+          <img
+            class="brand__mark"
+            src="assets/logo-nexaspark.svg"
+            width="40"
+            height="40"
+            alt=""
+          />
+          <span class="brand__text">
+            <span class="brand__name">NexaSpark</span>
+            <span class="brand__tagline">Explore</span>
+          </span>
+        </a>
+        <div class="header-location" role="group" aria-label="Delivery location">
+          <span class="header-location__pin" aria-hidden="true"></span>
+          <div class="header-location__stack">
+            <span class="header-location__label">Delivering to</span>
+            <span class="header-location__value">New Delhi 110002</span>
+            <button type="button" class="header-location__update">Update location</button>
+          </div>
+        </div>
+        <form class="header-search" role="search" action="products.html" method="get">
+          <label class="visually-hidden" for="home-search-cat">Department</label>
+          <select id="home-search-cat" name="cat" class="header-search__cat" aria-label="Search in department">
+            <option value="">All</option>
+            <option value="electronics">Electronics</option>
+            <option value="home">Home</option>
+            <option value="fashion">Fashion</option>
+          </select>
+          <label class="visually-hidden" for="home-search-q">Search</label>
+          <input
+            id="home-search-q"
+            type="search"
+            name="q"
+            class="header-search__input"
+            placeholder="Search for products, brands and more"
+            autocomplete="off"
+          />
+          <button type="submit" class="header-search__submit" aria-label="Search">
+            <span class="header-search__submit-icon" aria-hidden="true"></span>
+          </button>
+        </form>
+        <nav class="header-tools" aria-label="Account and cart">
+          <a href="#" class="header-tools__block header-tools__block--login">
+            <span class="header-tools__strong">Login</span>
+          </a>
+          <a href="#" class="header-tools__block header-tools__block--seller">
+            <span class="header-tools__strong">Become a Seller</span>
+          </a>
+          <a href="#" class="header-tools__block header-tools__block--more">
+            <span class="header-tools__strong">More</span>
+            <span class="header-tools__chev" aria-hidden="true"></span>
+          </a>
+          <a class="header-tools__cart cart-link" href="cart.html" aria-label="Shopping cart">
+            <span class="header-tools__cart-inner">
+              <span class="header-tools__cart-count" id="cart-count" hidden aria-live="polite"></span>
+              <span class="header-tools__cart-icon" aria-hidden="true"></span>
+              <span class="header-tools__cart-label">Cart</span>
+            </span>
+          </a>
+        </nav>
+        </div>
+      </div>
+      <div class="header__row header__row--subnav">
+        <nav class="header-subnav" aria-label="Shop by department">
+          <a class="header-subnav__all" href="products.html"><span class="header-subnav__burger" aria-hidden="true"></span> All</a>
+          <a href="products.html?cat=electronics">Electronics</a>
+          <a href="products.html?cat=home">Home &amp; Kitchen</a>
+          <a href="products.html?cat=fashion">Fashion</a>
+          <a href="products.html">Today’s deals</a>
+          <a href="help.html">Customer Service</a>
+          <a href="products.html">Bestsellers</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="main--home">
+      <section class="hero-carousel" aria-roledescription="carousel" aria-label="Promotions">
+        <div class="hero-carousel__viewport">
+          <div class="hero-carousel__track" id="hero-track">
+            <article class="hero-slide hero-slide--a" data-slide="0">
+              <div class="hero-slide__inner">
+                <div class="hero-slide__copy">
+                  <p class="hero-slide__eyebrow">Starting ₹99 · Budget store</p>
+                  <h1 class="hero-slide__title">Top brands &amp; wide selection</h1>
+                  <p class="hero-slide__sub">Electronics, home essentials, and more — demo catalog in INR.</p>
+                  <a class="hero-slide__cta" href="products.html">Shop all deals</a>
+                </div>
+                <div class="hero-slide__visual" role="presentation" aria-hidden="true"></div>
+              </div>
+            </article>
+            <article class="hero-slide hero-slide--b" data-slide="1" hidden>
+              <div class="hero-slide__inner">
+                <div class="hero-slide__copy">
+                  <p class="hero-slide__eyebrow">Electronics week</p>
+                  <h2 class="hero-slide__title">Phones, audio &amp; accessories</h2>
+                  <p class="hero-slide__sub">Browse filters, ratings, and PDP — wire your API when ready.</p>
+                  <a class="hero-slide__cta" href="products.html?cat=electronics">See electronics</a>
+                </div>
+                <div class="hero-slide__visual hero-slide__visual--b" role="presentation" aria-hidden="true"></div>
+              </div>
+            </article>
+            <article class="hero-slide hero-slide--c" data-slide="2" hidden>
+              <div class="hero-slide__inner">
+                <div class="hero-slide__copy">
+                  <p class="hero-slide__eyebrow">Home refresh</p>
+                  <h2 class="hero-slide__title">Style your space</h2>
+                  <p class="hero-slide__sub">Home &amp; kitchen picks with local cart in the browser.</p>
+                  <a class="hero-slide__cta" href="products.html?cat=home">Shop home</a>
+                </div>
+                <div class="hero-slide__visual hero-slide__visual--c" role="presentation" aria-hidden="true"></div>
+              </div>
+            </article>
+          </div>
+        </div>
+        <button type="button" class="hero-carousel__arrow hero-carousel__prev" aria-label="Previous slide">‹</button>
+        <button type="button" class="hero-carousel__arrow hero-carousel__next" aria-label="Next slide">›</button>
+      </section>
+
+      <section class="home-feature-section" aria-labelledby="home-deals-heading">
+        <h2 id="home-deals-heading" class="visually-hidden">Featured departments</h2>
+        <div class="home-feature-grid">
+          <article class="home-feature-card">
+            <h3 class="home-feature-card__title">Audio &amp; gadgets · Deals</h3>
+            <div class="home-feature-card__tiles">
+              <a href="products.html?q=earbud" class="home-tile">
+                <span class="home-tile__img home-tile__img--1"></span>
+                <span class="home-tile__cap">Earbuds &amp; audio</span>
+              </a>
+              <a href="products.html?q=USB" class="home-tile">
+                <span class="home-tile__img home-tile__img--2"></span>
+                <span class="home-tile__cap">USB &amp; hubs</span>
+              </a>
+            </div>
+            <a class="home-feature-card__more" href="products.html?cat=electronics">See more</a>
+          </article>
+          <article class="home-feature-card">
+            <h3 class="home-feature-card__title">Starting ₹199 · NexaSpark brands &amp; more</h3>
+            <div class="home-feature-card__tiles">
+              <a href="products.html?cat=home" class="home-tile">
+                <span class="home-tile__img home-tile__img--3"></span>
+                <span class="home-tile__cap">Bedsheets from ₹199</span>
+              </a>
+              <a href="products.html?cat=home" class="home-tile">
+                <span class="home-tile__img home-tile__img--4"></span>
+                <span class="home-tile__cap">Curtains from ₹199</span>
+              </a>
+            </div>
+            <a class="home-feature-card__more" href="products.html?cat=home">See more</a>
+          </article>
+          <article class="home-feature-card">
+            <h3 class="home-feature-card__title">Starting ₹49 · Home essentials</h3>
+            <div class="home-feature-card__tiles">
+              <a href="products.html?cat=home" class="home-tile">
+                <span class="home-tile__img home-tile__img--5"></span>
+                <span class="home-tile__cap">Cleaning supplies</span>
+              </a>
+              <a href="products.html?cat=home" class="home-tile">
+                <span class="home-tile__img home-tile__img--6"></span>
+                <span class="home-tile__cap">Bathroom accessories</span>
+              </a>
+            </div>
+            <a class="home-feature-card__more" href="products.html?cat=home">See more</a>
+          </article>
+          <article class="home-feature-card">
+            <h3 class="home-feature-card__title">Revamp your home in style</h3>
+            <div class="home-feature-card__tiles">
+              <a href="products.html?cat=fashion" class="home-tile">
+                <span class="home-tile__img home-tile__img--7"></span>
+                <span class="home-tile__cap">Cushions &amp; bedding</span>
+              </a>
+              <a href="products.html?cat=home" class="home-tile">
+                <span class="home-tile__img home-tile__img--8"></span>
+                <span class="home-tile__cap">Decor &amp; accents</span>
+              </a>
+            </div>
+            <a class="home-feature-card__more" href="products.html">See more</a>
+          </article>
+        </div>
+      </section>
+
+      <h2 class="section-title section-title--home"><span>Deals of the day</span></h2>
+      <div id="deal-strip" class="deal-strip"></div>
+
+      <h2 class="section-title section-title--home">
+        <span>Featured products</span> <a href="products.html" class="muted">See all</a>
+      </h2>
+      <div id="featured-grid" class="product-grid product-grid--home"></div>
+    </main>
+
+    <footer class="site-footer site-footer--marketplace">
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="help.html">Help Centre</a>
+        <a href="contact.html">Contact</a>
+        <a href="shipping-returns.html">Shipping &amp; Returns</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
+      <nav class="legal">
+        <span>© NexaSpark (demo)</span>
+        <a href="products.html">Shop</a>
+        <span>India · ₹ INR</span>
+      </nav>
+    </footer>
+
+    <script type="module" src="js/home.js"></script>
+  </body>
+</html>

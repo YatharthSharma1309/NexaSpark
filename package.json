@@ -1,0 +1,8 @@
+{
+  "name": "nexaspark",
+  "private": true,
+  "scripts": {
+    "test": "node --test ./tests/web-smoke.test.mjs",
+    "serve:web": "npx --yes serve web/storefront -p 8080"
+  }
+}
