@@ -5,7 +5,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getServerCart, setServerCart } from './cartState.mjs';
 import { guestSession } from './middleware/guestSession.mjs';
-import { appendOrder, getOrderById } from './ordersStore.mjs';
+import { appendOrder, getOrderById, listRecentOrdersByGuest } from './ordersStore.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
@@ -108,6 +108,14 @@ app.put('/api/cart', guestSession, cartJson, (req, res) => {
   res.json({ items: expandLineItems(norm.items, products) });
 });
 
+app.get('/api/orders/mine', guestSession, (req, res) => {
+  const sid = /** @type {string} */ (req.guestId);
+  const orders = listRecentOrdersByGuest(sid, 30);
+  res.set('Cache-Control', 'no-store');
+  res.set('Content-Type', 'application/json; charset=utf-8');
+  res.json({ orders });
+});
+
 app.get('/api/orders/:orderId', guestSession, (req, res) => {
   const orderId = String(req.params.orderId || '').trim();
   const o = getOrderById(orderId);
@@ -154,6 +162,6 @@ app.use(express.static(storefront, { index: 'index.html', extensions: ['html'] }
 
 app.listen(port, () => {
   console.log(
-    `NexaSpark dev server: http://127.0.0.1:${port}/  (api: /api/products, /api/cart, /api/orders)`,
+    `NexaSpark dev server: http://127.0.0.1:${port}/  (api: /api/products, /api/cart, /api/orders, /api/orders/mine)`,
   );
 });

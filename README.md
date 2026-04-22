@@ -24,6 +24,7 @@ Open http://127.0.0.1:8080 (use a local server — ES modules need `http`, not `
 
 - `GET` / `PUT /api/cart` — in-memory cart per `nexaspark_sid` cookie; client syncs with `localStorage` when the cart page loads and after changes (see `cart.js`).
 - `POST /api/orders` — demo order from JSON body `{ items: [{ id, qty }] }` (no payment); clears the server cart and appends the order to `server/data/orders.json` (gitignored, max 500 rows).
+- `GET /api/orders/mine` — recent demo orders for the current `nexaspark_sid` (used by `account.html`).
 - `GET /api/orders/:orderId` — only for the same `nexaspark_sid` that placed the order. Use `order.html?id=...` after checkout.
 
 ```bash

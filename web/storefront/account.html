@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Help Centre — NexaSpark." />
+    <meta name="description" content="Account — NexaSpark demo orders." />
     <meta name="theme-color" content="#2874f0" />
-    <title>Help Centre — NexaSpark</title>
+    <title>Account — NexaSpark</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body>
+  <body class="page-account">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header site-header--marketplace">
       <div class="header-sticky">
@@ -35,20 +35,20 @@
           </div>
         </div>
         <form class="header-search" role="search" action="products.html" method="get">
-          <label class="visually-hidden" for="plp-search-cat">Department</label>
-          <select id="plp-search-cat" name="cat" class="header-search__cat" aria-label="Search in department">
+          <label class="visually-hidden" for="account-search-cat">Department</label>
+          <select id="account-search-cat" name="cat" class="header-search__cat" aria-label="Search in department">
             <option value="">All</option>
             <option value="electronics">Electronics</option>
             <option value="home">Home</option>
             <option value="fashion">Fashion</option>
           </select>
-          <label class="visually-hidden" for="filter-q">Search</label>
+          <label class="visually-hidden" for="account-search-q">Search</label>
           <input
-            id="filter-q"
+            id="account-search-q"
             type="search"
             name="q"
             class="header-search__input"
-            placeholder="Search products"
+            placeholder="Search NexaSpark"
             autocomplete="off"
           />
           <button type="submit" class="header-search__submit" aria-label="Search">
@@ -56,8 +56,8 @@
           </button>
         </form>
         <nav class="header-tools" aria-label="Account and cart">
-          <a href="account.html" class="header-tools__block header-tools__block--login" aria-label="Account">
-            <span class="header-tools__strong">Login</span>
+          <a href="account.html" class="header-tools__block header-tools__block--login" aria-current="page" aria-label="Account">
+            <span class="header-tools__strong">Account</span>
           </a>
           <a href="#" class="header-tools__block header-tools__block--seller">
             <span class="header-tools__strong">Become a Seller</span>
@@ -89,24 +89,17 @@
       </div>
     </header>
 
-    <main id="main" class="content-page">
-      <h1>Help Centre</h1>
-      <h2>Orders &amp; cart</h2>
-      <p>
-        The shopping cart is stored in this browser only (demo). Clearing site data or using another device will not
-        show the same cart. Connect your backend to sync orders across devices.
+    <main id="main" class="content-page account-page">
+      <h1>Account</h1>
+      <p class="account-lead">
+        Guest session — <strong>demo orders</strong> you place with <code>npm run dev</code> are listed here for this
+        browser. Real sign-in and profiles come later.
       </p>
-      <h2>Payments</h2>
-      <p>
-        Checkout shows an alert only — wire Stripe, Razorpay, or your PSP before accepting real money.
+      <h2>Your orders</h2>
+      <div id="account-orders" class="account-orders" aria-live="polite"></div>
+      <p class="account-foot muted">
+        <a href="products.html">Continue shopping</a> · <a href="help.html">Help</a>
       </p>
-      <h2>Returns</h2>
-      <p>
-        See <a href="shipping-returns.html">Shipping &amp; Returns</a> for demo policy text you can replace with your
-        legal team’s version.
-      </p>
-      <h2>Still stuck?</h2>
-      <p><a href="contact.html">Contact us</a> · <a href="products.html">Back to shopping</a></p>
     </main>
 
     <footer class="site-footer site-footer--marketplace">
@@ -121,14 +114,11 @@
       <nav class="legal">
         <span>© NexaSpark (demo)</span>
         <a href="index.html">Home</a>
-        <a href="products.html">Shop</a>
+        <a href="cart.html">Cart</a>
         <span>India · ₹ INR</span>
       </nav>
     </footer>
 
-    <script type="module">
-      import { syncCartBadge } from './js/nav.js';
-      syncCartBadge();
-    </script>
+    <script type="module" src="js/account.js"></script>
   </body>
 </html>

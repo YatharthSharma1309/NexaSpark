@@ -13,6 +13,7 @@ const required = [
   "product.html",
   "cart.html",
   "order.html",
+  "account.html",
   "404.html",
   "css/style.css",
   "js/catalog.js",
@@ -20,6 +21,7 @@ const required = [
   "js/nav.js",
   "js/cart.js",
   "js/order.js",
+  "js/account.js",
 ];
 
 test("web storefront: required files exist", () => {

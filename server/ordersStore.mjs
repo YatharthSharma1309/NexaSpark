@@ -40,3 +40,34 @@ export function getOrderById(orderId) {
     throw e;
   }
 }
+
+/**
+ * @param {string} guestId
+ * @param {number} [limit]
+ * @returns {{ orderId: string, totalInr: number, at: string, lineCount: number, demo: boolean }[]}
+ */
+export function listRecentOrdersByGuest(guestId, limit = 25) {
+  try {
+    const all = JSON.parse(readFileSync(path, 'utf8'));
+    if (!Array.isArray(all)) return [];
+    const rows = all
+      .filter((o) => o && o.guestId === guestId)
+      .sort((a, b) => {
+        const ta = a.at || '';
+        const tb = b.at || '';
+        return tb > ta ? 1 : tb < ta ? -1 : 0;
+      })
+      .slice(0, limit)
+      .map((o) => ({
+        orderId: o.orderId,
+        totalInr: o.totalInr,
+        at: o.at,
+        lineCount: Array.isArray(o.items) ? o.items.length : 0,
+        demo: o.demo === true,
+      }));
+    return rows;
+  } catch (e) {
+    if (/** @type {NodeJS.ErrnoException} */ (e).code === 'ENOENT') return [];
+    throw e;
+  }
+}

@@ -1656,3 +1656,85 @@ main {
 .order-panel__actions {
   margin: 0.75rem 0 0;
 }
+
+/* —— Account (guest orders) —— */
+.account-page h2 {
+  margin: 1.5rem 0 0.75rem;
+  font-size: 1.15rem;
+}
+
+.account-lead {
+  line-height: 1.6;
+  margin: 0 0 0.5rem;
+}
+
+.account-lead code {
+  font-size: 0.9em;
+  background: #f0f0f0;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+
+.account-orders {
+  min-height: 2.5rem;
+}
+
+.account-order-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.account-order-row {
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.15rem;
+  margin: 0;
+}
+
+.account-order-row:last-child {
+  border-bottom: none;
+}
+
+.account-order-id {
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text);
+  display: inline-block;
+  margin-bottom: 0.25rem;
+}
+.account-order-id:hover {
+  color: var(--accent);
+}
+
+.order-code--inline {
+  font-size: 0.85em;
+  margin: 0;
+  display: inline;
+  padding: 0.1rem 0.35rem;
+}
+
+.account-order-meta {
+  font-size: 0.8rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.account-foot {
+  margin: 1.5rem 0 0;
+  font-size: 0.9rem;
+}
+
+.account-static {
+  padding: 1rem;
+  background: #fafafa;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  line-height: 1.55;
+}
