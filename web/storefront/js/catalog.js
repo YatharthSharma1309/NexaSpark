@@ -1,4 +1,8 @@
-/** NexaSpark demo catalog — replace with your API. INR, MRP/% off/ratings patterns. */
+/**
+ * NexaSpark demo catalog — INR, MRP/% off/ratings.
+ * When using `npm run dev`, keep this array in sync with `server/data/products.json`
+ * (same ids and fields) until a build step or DB backs the API.
+ */
 export const PRODUCTS = [
   {
     id: 'p1',

@@ -1,4 +1,5 @@
-import { byId, formatInr, discountPct, escAttr, escHtml } from './catalog.js';
+import { formatInr, discountPct, escAttr, escHtml } from './catalog.js';
+import { getProductById } from './catalogApi.js';
 import { addToCart, toggleWishlist, isWishlisted } from './cart.js';
 import { syncCartBadge } from './nav.js';
 
@@ -6,7 +7,7 @@ const root = document.getElementById('pdp-root');
 const params = new URLSearchParams(window.location.search);
 const id = params.get('id')?.trim() || '';
 
-function render() {
+async function render() {
   if (!root || !id) {
     if (root) {
       root.innerHTML =
@@ -14,7 +15,14 @@ function render() {
     }
     return;
   }
-  const p = byId(id);
+  let p;
+  try {
+    p = await getProductById(id);
+  } catch {
+    root.innerHTML =
+      '<p role="alert">Could not load product. <a href="products.html">Back to products</a></p>';
+    return;
+  }
   if (!p) {
     root.innerHTML = '<p role="alert">Product not found. <a href="products.html">Back to products</a></p>';
     return;

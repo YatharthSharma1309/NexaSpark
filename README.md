@@ -12,11 +12,21 @@ Lean **static** marketplace UI: home, PLP with filters/sort, PDP, cart (`localSt
 
 ## Run (web)
 
+**Static only** (no `/api` — the storefront uses bundled `catalog.js` data):
+
 ```bash
 npm run serve:web
 ```
 
 Open http://127.0.0.1:8080 (use a local server — ES modules need `http`, not `file://`).
+
+**Dev server** — read-only `GET /api/products` and `GET /api/products/:id` plus the same static UI on one port (default 3000):
+
+```bash
+npm run dev
+```
+
+Open http://127.0.0.1:3000 — `catalogApi.js` loads the catalog from the API with fallback to `catalog.js` if `/api` is missing.
 
 ## Test
 
@@ -30,7 +40,7 @@ Project rules under `.cursor/rules/` define two roles only: **code tester** and 
 
 ## Next
 
-- Point `web/storefront/js/catalog.js` (or new modules) at your backend.
+- `server/data/products.json` is the API seed; keep in sync with `web/storefront/js/catalog.js` until the DB is the source of truth.
 - Replace demo checkout alert in `cart-page.js` with real payments (Stripe, Razorpay, etc.).
 
 ## License

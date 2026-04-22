@@ -3,6 +3,13 @@
   "private": true,
   "scripts": {
     "test": "node --test ./tests/web-smoke.test.mjs",
+    "dev": "node server/index.mjs",
     "serve:web": "npx --yes serve web/storefront -p 8080"
+  },
+  "devDependencies": {
+    "@playwright/mcp": "^0.0.70"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }

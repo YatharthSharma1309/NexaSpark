@@ -1,4 +1,5 @@
-import { PRODUCTS, formatInr, discountPct, escAttr } from './catalog.js';
+import { formatInr, discountPct, escAttr, escHtml } from './catalog.js';
+import { getProducts } from './catalogApi.js';
 import { syncCartBadge } from './nav.js';
 
 const grid = document.getElementById('plp-grid');
@@ -16,11 +17,14 @@ if (qEl && initialQ) qEl.value = params.get('q') || '';
 if (catEl && initialCat) catEl.value = initialCat;
 if (headerCatEl && initialCat) headerCatEl.value = initialCat;
 
+/** @type {Awaited<ReturnType<typeof getProducts>>} */
+let productList = [];
+
 function starRow(rating) {
   const full = Math.round(rating);
   let s = '';
   for (let i = 0; i < full; i++) s += '★';
-  return `<span class="stars">${s}</span> <span class="muted">${rating}</span>`;
+  return `<span class="stars" aria-label="${escAttr(String(rating))} out of 5">${s}</span> <span class="muted">${escAttr(String(rating))}</span>`;
 }
 
 function card(p) {
@@ -31,7 +35,7 @@ function card(p) {
   return `<article class="card">
     <a class="card__link" href="product.html?id=${encodeURIComponent(p.id)}">
       ${img}
-      <h3 class="card__title">${p.title}</h3>
+      <h3 class="card__title">${escHtml(p.title)}</h3>
       <p class="card__rating">${starRow(p.rating)} · ${p.reviews} reviews</p>
       <p class="card__price"><span class="price">${formatInr(p.price)}</span>
         ${off ? `<span class="strike">${formatInr(p.mrp)}</span> <span class="pct">${off}% off</span>` : ''}
@@ -44,7 +48,7 @@ function filterList() {
   const q = (qEl?.value || '').trim().toLowerCase();
   const cat = catEl?.value || '';
   const minR = Number(minRatingEl?.value) || 0;
-  let list = PRODUCTS.filter((p) => {
+  let list = productList.filter((p) => {
     if (cat && p.category !== cat) return false;
     if (p.rating < minR) return false;
     if (q) {
@@ -66,22 +70,37 @@ function render() {
   const q = (qEl?.value || '').trim();
   grid.innerHTML = list.length
     ? list.map(card).join('')
-    : `<p class="muted" role="status">No products match${q ? ` for “${escAttr(q)}”` : ''}. <a href="products.html">Clear search</a> or try another keyword.</p>`;
+    : `<p class="muted" role="status">No products match${
+        q ? ` for “${escHtml(q)}”` : ''
+      }. <a href="products.html">Clear search</a> or try another keyword.</p>`;
 }
 
-['input', 'change'].forEach((ev) => {
-  qEl?.addEventListener(ev, render);
-  sortEl?.addEventListener(ev, render);
-  catEl?.addEventListener(ev, () => {
-    if (headerCatEl) headerCatEl.value = catEl.value;
-    render();
+async function init() {
+  try {
+    productList = await getProducts();
+  } catch {
+    if (grid) {
+      grid.innerHTML =
+        '<p class="muted" role="alert">Could not load products. Check your connection and try again.</p>';
+    }
+    syncCartBadge();
+    return;
+  }
+  render();
+  ['input', 'change'].forEach((ev) => {
+    qEl?.addEventListener(ev, render);
+    sortEl?.addEventListener(ev, render);
+    catEl?.addEventListener(ev, () => {
+      if (headerCatEl) headerCatEl.value = catEl.value;
+      render();
+    });
+    minRatingEl?.addEventListener(ev, render);
+    headerCatEl?.addEventListener(ev, () => {
+      if (catEl) catEl.value = headerCatEl.value;
+      render();
+    });
   });
-  minRatingEl?.addEventListener(ev, render);
-  headerCatEl?.addEventListener(ev, () => {
-    if (catEl) catEl.value = headerCatEl.value;
-    render();
-  });
-});
+  syncCartBadge();
+}
 
-render();
-syncCartBadge();
+init();

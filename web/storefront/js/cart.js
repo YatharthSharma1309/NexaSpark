@@ -3,17 +3,33 @@ const WISH_KEY = 'nexaspark_storefront_wishlist';
 const LEGACY_CART = 'shopsample_cart';
 const LEGACY_WISH = 'shopsample_wishlist';
 
+function safeSetItem(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    /* quota, private mode, or disabled */
+  }
+}
+
 function migrateLegacy() {
   try {
     const oldC = localStorage.getItem(LEGACY_CART);
     if (oldC && !localStorage.getItem(KEY)) {
-      localStorage.setItem(KEY, oldC);
-      localStorage.removeItem(LEGACY_CART);
+      safeSetItem(KEY, oldC);
+      try {
+        localStorage.removeItem(LEGACY_CART);
+      } catch {
+        /* ignore */
+      }
     }
     const oldW = localStorage.getItem(LEGACY_WISH);
     if (oldW && !localStorage.getItem(WISH_KEY)) {
-      localStorage.setItem(WISH_KEY, oldW);
-      localStorage.removeItem(LEGACY_WISH);
+      safeSetItem(WISH_KEY, oldW);
+      try {
+        localStorage.removeItem(LEGACY_WISH);
+      } catch {
+        /* ignore */
+      }
     }
   } catch {
     /* ignore */
@@ -35,7 +51,7 @@ export function getCart() {
 }
 
 export function setCart(cart) {
-  localStorage.setItem(KEY, JSON.stringify(cart));
+  safeSetItem(KEY, JSON.stringify(cart));
 }
 
 export function addToCart(id, qty = 1) {
@@ -74,7 +90,7 @@ export function toggleWishlist(id) {
   let w = getWishlist();
   if (w.includes(id)) w = w.filter((x) => x !== id);
   else w.push(id);
-  localStorage.setItem(WISH_KEY, JSON.stringify(w));
+  safeSetItem(WISH_KEY, JSON.stringify(w));
   return w.includes(id);
 }
 

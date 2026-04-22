@@ -1,4 +1,5 @@
-import { PRODUCTS, formatInr } from './catalog.js';
+import { formatInr, escAttr, escHtml } from './catalog.js';
+import { byId } from './catalogApi.js';
 import { getCart, setLineQty, cartCount } from './cart.js';
 import { syncCartBadge } from './nav.js';
 
@@ -20,23 +21,23 @@ function render() {
   let sub = 0;
   const lines = cart.items
     .map((line) => {
-      const p = PRODUCTS.find((x) => x.id === line.id);
+      const p = byId(line.id);
       if (!p) return '';
       sub += p.price * line.qty;
       const thumb = p.image
         ? `<img class="cart-line__thumb" src="${p.image}" alt="" width="64" height="64" loading="lazy" decoding="async" />`
         : '';
-      return `<div class="cart-line" data-id="${p.id}">
+      return `<div class="cart-line" data-id="${escAttr(p.id)}">
         <div class="cart-line__info">
           ${thumb}
           <div class="cart-line__meta">
-          <strong>${p.title}</strong>
+          <strong>${escHtml(p.title)}</strong>
           <p class="muted">${formatInr(p.price)} × ${line.qty}</p>
           </div>
         </div>
         <div class="cart-line__qty">
-          <label>Qty <input type="number" class="qty-input" min="1" value="${line.qty}" data-id="${p.id}" aria-label="Quantity for ${p.title}" /></label>
-          <button type="button" class="btn-link remove-btn" data-id="${p.id}">Remove</button>
+          <label>Qty <input type="number" class="qty-input" min="1" value="${line.qty}" data-id="${escAttr(p.id)}" aria-label="Quantity for ${escAttr(p.title)}" /></label>
+          <button type="button" class="btn-link remove-btn" data-id="${escAttr(p.id)}">Remove</button>
         </div>
         <div class="cart-line__sum">${formatInr(p.price * line.qty)}</div>
       </div>`;
