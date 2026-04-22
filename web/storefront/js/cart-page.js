@@ -6,6 +6,7 @@ import {
   setLineQty,
   isCartApiAvailable,
   pushCartToServer,
+  scheduleServerCartSync,
   syncCartOnPageLoad,
 } from './cart.js';
 import { syncCartBadge } from './nav.js';
@@ -59,7 +60,7 @@ function render() {
       const id = inp.getAttribute('data-id');
       const q = Math.max(1, Number(inp.value) || 1);
       if (id) setLineQty(id, q);
-      void pushCartToServer();
+      scheduleServerCartSync();
       render();
     });
   });
@@ -67,7 +68,7 @@ function render() {
     btn.addEventListener('click', () => {
       const id = btn.getAttribute('data-id');
       if (id) setLineQty(id, 0);
-      void pushCartToServer();
+      scheduleServerCartSync();
       render();
     });
   });

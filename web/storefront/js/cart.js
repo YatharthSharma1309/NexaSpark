@@ -100,19 +100,31 @@ export function isWishlisted(id) {
 
 /* --- Optional sync with /api/cart (same origin, e.g. `npm run dev`) --- */
 let serverCartApiOk = null;
+/** @type {Promise<boolean> | null} */
+let healthPromise = null;
 
 export async function isCartApiAvailable() {
   if (serverCartApiOk !== null) return serverCartApiOk;
-  try {
-    const r = await fetch('/api/health', { method: 'GET' });
-    serverCartApiOk = r.ok;
-  } catch {
-    serverCartApiOk = false;
-  }
-  return serverCartApiOk;
+  if (healthPromise) return healthPromise;
+  healthPromise = fetch('/api/health', { method: 'GET', cache: 'no-store' })
+    .then((r) => {
+      serverCartApiOk = r.ok;
+      return serverCartApiOk;
+    })
+    .catch(() => {
+      serverCartApiOk = false;
+      return false;
+    });
+  return healthPromise;
 }
 
+let serverSyncTimer = 0;
+
 export async function pushCartToServer() {
+  if (serverSyncTimer) {
+    clearTimeout(serverSyncTimer);
+    serverSyncTimer = 0;
+  }
   if (!(await isCartApiAvailable())) return;
   const cart = getCart();
   try {
@@ -126,12 +138,25 @@ export async function pushCartToServer() {
   }
 }
 
+/**
+ * Batches rapid qty/remove updates into one network call (e.g. typing in the qty field).
+ * Call `pushCartToServer` for an immediate sync (e.g. after placing an order).
+ */
+export function scheduleServerCartSync() {
+  if (serverCartApiOk === false) return;
+  clearTimeout(serverSyncTimer);
+  serverSyncTimer = window.setTimeout(() => {
+    serverSyncTimer = 0;
+    void pushCartToServer();
+  }, 400);
+}
+
 /** On the cart page: if server has lines, it wins; else push local to server when local has items. */
 export async function syncCartOnPageLoad() {
   if (!(await isCartApiAvailable())) return;
   let data;
   try {
-    const r = await fetch('/api/cart');
+    const r = await fetch('/api/cart', { cache: 'no-store' });
     if (!r.ok) return;
     data = await r.json();
   } catch {

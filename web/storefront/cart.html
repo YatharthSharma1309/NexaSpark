@@ -8,7 +8,7 @@
     <title>Cart — NexaSpark</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body>
+  <body class="page-cart">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header site-header--marketplace">
       <div class="header-sticky">
@@ -89,13 +89,18 @@
       </div>
     </header>
 
-    <main id="main">
-      <h1>Shopping cart</h1>
-      <div id="cart-root"></div>
-      <div class="cart-summary">
-        <p><strong>Subtotal</strong> <span id="cart-subtotal">₹0</span></p>
-        <p class="muted" style="font-size: 0.85rem">Checkout is demo-only — connect your payment provider.</p>
-        <button type="button" class="btn-primary checkout-btn" id="checkout-btn" disabled>Proceed to checkout</button>
+    <main id="main" class="page-shell page-cart-main">
+      <h1 class="page-cart-title">Shopping cart</h1>
+      <div class="cart-page-grid">
+        <div id="cart-root" class="cart-items-panel" aria-live="polite"></div>
+        <aside class="cart-summary" aria-labelledby="cart-summary-heading">
+          <h2 id="cart-summary-heading" class="visually-hidden">Order summary</h2>
+          <p class="cart-summary__row">
+            <span>Subtotal</span> <strong id="cart-subtotal" class="cart-summary__amount">₹0</strong>
+          </p>
+          <p class="cart-summary__note muted">Demo checkout — connect a payment provider for production.</p>
+          <button type="button" class="btn-primary checkout-btn" id="checkout-btn" disabled>Proceed to checkout</button>
+        </aside>
       </div>
     </main>
 
