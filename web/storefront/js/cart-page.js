@@ -1,6 +1,13 @@
 import { formatInr, escAttr, escHtml } from './catalog.js';
 import { byId } from './catalogApi.js';
-import { getCart, setLineQty, pushCartToServer, syncCartOnPageLoad } from './cart.js';
+import {
+  getCart,
+  setCart,
+  setLineQty,
+  isCartApiAvailable,
+  pushCartToServer,
+  syncCartOnPageLoad,
+} from './cart.js';
 import { syncCartBadge } from './nav.js';
 
 const root = document.getElementById('cart-root');
@@ -66,9 +73,33 @@ function render() {
   });
 }
 
-checkoutBtn?.addEventListener('click', () => {
+checkoutBtn?.addEventListener('click', async () => {
+  const cart = getCart();
+  if (!cart.items.length) return;
+  if (await isCartApiAvailable()) {
+    try {
+      const r = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(cart),
+      });
+      if (r.ok) {
+        const data = await r.json();
+        setCart({ items: [] });
+        await pushCartToServer();
+        syncCartBadge();
+        window.alert(
+          `Order placed (demo)\n${data.orderId}\nTotal: ${formatInr(data.totalInr)}\n\nWire a payment provider for production.`,
+        );
+        render();
+        return;
+      }
+    } catch {
+      /* fall through */
+    }
+  }
   window.alert(
-    'Demo only — connect Stripe, Razorpay, or your order API here before taking real payments.'
+    'Demo only — run `npm run dev` to post a demo order, or connect Stripe, Razorpay, or your order API for production.',
   );
 });
 

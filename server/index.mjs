@@ -1,3 +1,4 @@
+import { randomBytes } from 'node:crypto';
 import express from 'express';
 import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
@@ -106,10 +107,29 @@ app.put('/api/cart', guestSession, cartJson, (req, res) => {
   res.json({ items: expandLineItems(norm.items, products) });
 });
 
+/** Demo order — no payment; replace with Checkout Sessions / Razorpay, etc. */
+app.post('/api/orders', guestSession, cartJson, (req, res) => {
+  const sid = /** @type {string} */ (req.guestId);
+  const norm = normalizeCartBody(req.body, products);
+  if (norm.items.length === 0) {
+    return res.status(400).json({ error: 'empty_cart' });
+  }
+  const lines = expandLineItems(norm.items, products);
+  let totalInr = 0;
+  for (const line of lines) {
+    if (line) totalInr += line.product.price * line.qty;
+  }
+  const orderId = `NS-${Date.now()}-${randomBytes(3).toString('hex')}`;
+  setServerCart(sid, []);
+  res.set('Cache-Control', 'no-store');
+  res.set('Content-Type', 'application/json; charset=utf-8');
+  res.status(201).json({ orderId, totalInr, items: lines, demo: true });
+});
+
 app.use(express.static(storefront, { index: 'index.html', extensions: ['html'] }));
 
 app.listen(port, () => {
   console.log(
-    `NexaSpark dev server: http://127.0.0.1:${port}/  (api: /api/products, /api/cart)`,
+    `NexaSpark dev server: http://127.0.0.1:${port}/  (api: /api/products, /api/cart, /api/orders)`,
   );
 });
