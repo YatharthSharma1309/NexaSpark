@@ -88,10 +88,9 @@ checkoutBtn?.addEventListener('click', async () => {
         setCart({ items: [] });
         await pushCartToServer();
         syncCartBadge();
-        window.alert(
-          `Order placed (demo)\n${data.orderId}\nTotal: ${formatInr(data.totalInr)}\n\nWire a payment provider for production.`,
+        window.location.assign(
+          `order.html?id=${encodeURIComponent(String(data.orderId))}`,
         );
-        render();
         return;
       }
     } catch {

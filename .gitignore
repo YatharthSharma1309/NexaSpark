@@ -4,3 +4,4 @@
 node_modules/
 .cursor/
 .playwright-mcp/
+server/data/orders.json

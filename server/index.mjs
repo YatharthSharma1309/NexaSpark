@@ -5,6 +5,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getServerCart, setServerCart } from './cartState.mjs';
 import { guestSession } from './middleware/guestSession.mjs';
+import { appendOrder, getOrderById } from './ordersStore.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
@@ -107,6 +108,22 @@ app.put('/api/cart', guestSession, cartJson, (req, res) => {
   res.json({ items: expandLineItems(norm.items, products) });
 });
 
+app.get('/api/orders/:orderId', guestSession, (req, res) => {
+  const orderId = String(req.params.orderId || '').trim();
+  const o = getOrderById(orderId);
+  if (!o) {
+    return res.status(404).json({ error: 'not_found' });
+  }
+  if (o.guestId && o.guestId !== req.guestId) {
+    return res.status(404).json({ error: 'not_found' });
+  }
+  const rest = { ...o };
+  if ('guestId' in rest) delete rest.guestId;
+  res.set('Cache-Control', 'no-store');
+  res.set('Content-Type', 'application/json; charset=utf-8');
+  res.json(rest);
+});
+
 /** Demo order — no payment; replace with Checkout Sessions / Razorpay, etc. */
 app.post('/api/orders', guestSession, cartJson, (req, res) => {
   const sid = /** @type {string} */ (req.guestId);
@@ -121,6 +138,13 @@ app.post('/api/orders', guestSession, cartJson, (req, res) => {
   }
   const orderId = `NS-${Date.now()}-${randomBytes(3).toString('hex')}`;
   setServerCart(sid, []);
+  const record = { orderId, totalInr, items: lines, demo: true, guestId: sid };
+  try {
+    appendOrder(record);
+  } catch (e) {
+    console.error('appendOrder', e);
+    return res.status(500).json({ error: 'persist_failed' });
+  }
   res.set('Cache-Control', 'no-store');
   res.set('Content-Type', 'application/json; charset=utf-8');
   res.status(201).json({ orderId, totalInr, items: lines, demo: true });
