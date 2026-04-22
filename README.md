@@ -40,7 +40,7 @@ Project rules under `.cursor/rules/` define two roles only: **code tester** and 
 
 ## Next
 
-- `server/data/products.json` is the API seed; keep in sync with `web/storefront/js/catalog.js` until the DB is the source of truth.
+- `server/data/products.json` is the API seed. After changing `web/storefront/js/catalog.js`, run `npm run sync:catalog` to refresh the JSON (until a DB is the source of truth).
 - Replace demo checkout alert in `cart-page.js` with real payments (Stripe, Razorpay, etc.).
 
 ## License

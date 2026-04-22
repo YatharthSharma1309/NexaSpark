@@ -1,9 +1,11 @@
 {
   "name": "nexaspark",
   "private": true,
+  "type": "module",
   "scripts": {
     "test": "node --test ./tests/web-smoke.test.mjs",
     "dev": "node server/index.mjs",
+    "sync:catalog": "node scripts/sync-catalog-to-server.mjs",
     "serve:web": "npx --yes serve web/storefront -p 8080"
   },
   "devDependencies": {
