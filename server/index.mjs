@@ -2,6 +2,8 @@ import express from 'express';
 import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getServerCart, setServerCart } from './cartState.mjs';
+import { guestSession } from './middleware/guestSession.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
@@ -43,8 +45,71 @@ app.get('/api/products/:id', (req, res) => {
   res.json(p);
 });
 
+const cartJson = express.json({ limit: '32kb' });
+
+/**
+ * @param {unknown} body
+ * @param {typeof products} catalog
+ * @returns {{ items: { id: string, qty: number }[] }}
+ */
+function normalizeCartBody(body, catalog) {
+  if (!body || !Array.isArray(body.items)) return { items: [] };
+  const seen = new Map();
+  for (const line of body.items) {
+    const id = String(line.id || '')
+      .trim()
+      .toLowerCase();
+    if (!id) continue;
+    if (!catalog.some((x) => x.id === id)) continue;
+    let q = Math.floor(Number(line.qty));
+    if (q < 1) q = 1;
+    if (q > 99) q = 99;
+    seen.set(id, q);
+  }
+  return { items: [...seen].map(([id, qty]) => ({ id, qty })) };
+}
+
+/**
+ * @param { { id: string, qty: number }[] } items
+ * @param {typeof products} catalog
+ */
+function expandLineItems(items, catalog) {
+  return items
+    .map((line) => {
+      const product = catalog.find((x) => x.id === line.id);
+      if (!product) return null;
+      return { id: line.id, qty: line.qty, product };
+    })
+    .filter((x) => x != null);
+}
+
+app.get('/api/cart', guestSession, (req, res) => {
+  const sid = /** @type {string} */ (req.guestId);
+  let { items } = getServerCart(sid);
+  const validIds = new Set(products.map((p) => p.id));
+  const pruned = items.filter((l) => validIds.has(l.id));
+  if (pruned.length !== items.length) {
+    setServerCart(sid, pruned);
+    items = pruned;
+  }
+  res.set('Cache-Control', 'no-store');
+  res.set('Content-Type', 'application/json; charset=utf-8');
+  res.json({ items: expandLineItems(items, products) });
+});
+
+app.put('/api/cart', guestSession, cartJson, (req, res) => {
+  const sid = /** @type {string} */ (req.guestId);
+  const norm = normalizeCartBody(req.body, products);
+  setServerCart(sid, norm.items);
+  res.set('Cache-Control', 'no-store');
+  res.set('Content-Type', 'application/json; charset=utf-8');
+  res.json({ items: expandLineItems(norm.items, products) });
+});
+
 app.use(express.static(storefront, { index: 'index.html', extensions: ['html'] }));
 
 app.listen(port, () => {
-  console.log(`NexaSpark dev server: http://127.0.0.1:${port}/  (api at /api/products)`);
+  console.log(
+    `NexaSpark dev server: http://127.0.0.1:${port}/  (api: /api/products, /api/cart)`,
+  );
 });

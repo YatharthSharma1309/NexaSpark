@@ -97,3 +97,56 @@ export function toggleWishlist(id) {
 export function isWishlisted(id) {
   return getWishlist().includes(id);
 }
+
+/* --- Optional sync with /api/cart (same origin, e.g. `npm run dev`) --- */
+let serverCartApiOk = null;
+
+export async function isCartApiAvailable() {
+  if (serverCartApiOk !== null) return serverCartApiOk;
+  try {
+    const r = await fetch('/api/health', { method: 'GET' });
+    serverCartApiOk = r.ok;
+  } catch {
+    serverCartApiOk = false;
+  }
+  return serverCartApiOk;
+}
+
+export async function pushCartToServer() {
+  if (!(await isCartApiAvailable())) return;
+  const cart = getCart();
+  try {
+    await fetch('/api/cart', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cart),
+    });
+  } catch {
+    /* offline */
+  }
+}
+
+/** On the cart page: if server has lines, it wins; else push local to server when local has items. */
+export async function syncCartOnPageLoad() {
+  if (!(await isCartApiAvailable())) return;
+  let data;
+  try {
+    const r = await fetch('/api/cart');
+    if (!r.ok) return;
+    data = await r.json();
+  } catch {
+    return;
+  }
+  const sItems = Array.isArray(data?.items) ? data.items : [];
+  const fromServer = sItems
+    .map((x) => ({ id: String(x.id), qty: x.qty }))
+    .filter((x) => x.id && x.qty >= 1);
+  const local = getCart();
+  if (fromServer.length > 0) {
+    setCart({ items: fromServer.map((x) => ({ id: x.id, qty: x.qty })) });
+    return;
+  }
+  if (local.items.length > 0) {
+    await pushCartToServer();
+  }
+}

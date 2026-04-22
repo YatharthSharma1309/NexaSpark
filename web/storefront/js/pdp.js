@@ -1,6 +1,6 @@
 import { formatInr, discountPct, escAttr, escHtml } from './catalog.js';
 import { getProductById } from './catalogApi.js';
-import { addToCart, toggleWishlist, isWishlisted } from './cart.js';
+import { addToCart, pushCartToServer, toggleWishlist, isWishlisted } from './cart.js';
 import { syncCartBadge } from './nav.js';
 
 const root = document.getElementById('pdp-root');
@@ -67,6 +67,7 @@ async function render() {
   document.getElementById('add-cart-action')?.addEventListener('click', () => {
     const q = Math.max(1, Number(qtyInput?.value) || 1);
     addToCart(p.id, q);
+    void pushCartToServer();
     syncCartBadge();
     const b = document.getElementById('add-cart-action');
     if (b) {

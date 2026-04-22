@@ -12,6 +12,7 @@
     "@playwright/mcp": "^0.0.70"
   },
   "dependencies": {
+    "cookie": "^1.1.1",
     "express": "^5.2.1"
   }
 }

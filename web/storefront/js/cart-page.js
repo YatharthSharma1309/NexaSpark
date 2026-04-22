@@ -1,6 +1,6 @@
 import { formatInr, escAttr, escHtml } from './catalog.js';
 import { byId } from './catalogApi.js';
-import { getCart, setLineQty, cartCount } from './cart.js';
+import { getCart, setLineQty, pushCartToServer, syncCartOnPageLoad } from './cart.js';
 import { syncCartBadge } from './nav.js';
 
 const root = document.getElementById('cart-root');
@@ -52,6 +52,7 @@ function render() {
       const id = inp.getAttribute('data-id');
       const q = Math.max(1, Number(inp.value) || 1);
       if (id) setLineQty(id, q);
+      void pushCartToServer();
       render();
     });
   });
@@ -59,6 +60,7 @@ function render() {
     btn.addEventListener('click', () => {
       const id = btn.getAttribute('data-id');
       if (id) setLineQty(id, 0);
+      void pushCartToServer();
       render();
     });
   });
@@ -70,4 +72,10 @@ checkoutBtn?.addEventListener('click', () => {
   );
 });
 
-render();
+syncCartOnPageLoad()
+  .then(() => {
+    render();
+  })
+  .catch(() => {
+    render();
+  });

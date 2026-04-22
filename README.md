@@ -20,13 +20,15 @@ npm run serve:web
 
 Open http://127.0.0.1:8080 (use a local server — ES modules need `http`, not `file://`).
 
-**Dev server** — read-only `GET /api/products` and `GET /api/products/:id` plus the same static UI on one port (default 3000):
+**Dev server** — catalog and **guest cart** over HTTP on one port (default 3000):
+
+- `GET` / `PUT /api/cart` — in-memory cart per `nexaspark_sid` cookie; client syncs with `localStorage` when the cart page loads and after changes (see `cart.js`).
 
 ```bash
 npm run dev
 ```
 
-Open http://127.0.0.1:3000 — `catalogApi.js` loads the catalog from the API with fallback to `catalog.js` if `/api` is missing.
+Open http://127.0.0.1:3000 — `catalogApi.js` loads the catalog from the API with fallback to `catalog.js` if `/api` is missing. `npm run serve:web` has no API; the cart stays browser-only.
 
 ## Test
 
@@ -41,6 +43,7 @@ Project rules under `.cursor/rules/` define two roles only: **code tester** and 
 ## Next
 
 - `server/data/products.json` is the API seed. After changing `web/storefront/js/catalog.js`, run `npm run sync:catalog` to refresh the JSON (until a DB is the source of truth).
+- Persist guest carts in Redis/DB; add login and merge cart on the server.
 - Replace demo checkout alert in `cart-page.js` with real payments (Stripe, Razorpay, etc.).
 
 ## License
