@@ -1,28 +1,24 @@
 /**
- * Downloads remote `image` URLs from catalog.js into web/storefront/images/products/{id}.jpg
- * Skips entries that already use relative paths (images/products/...).
- * To refresh assets: temporarily set an `image` to an https URL in catalog.js, run this script, then restore the local path.
+ * Downloads catalog product JPEGs into web/storefront/images/products/{id}.jpg
+ * from Pexels IDs in product-image-sources.mjs (not from remote URLs in catalog.js).
  */
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { PRODUCTS } from '../web/storefront/js/catalog.js';
+import { PEXELS_PHOTO_ID_BY_PRODUCT, pexelsPhotoJpegUrl } from './product-image-sources.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const outDir = join(__dirname, '..', 'web', 'storefront', 'images', 'products');
 
 await mkdir(outDir, { recursive: true });
 
-for (const p of PRODUCTS) {
-  const url = String(p.image || '').trim();
-  if (!/^https?:\/\//i.test(url)) {
-    console.warn(`skip ${p.id}: local or empty (${url || 'empty'})`);
-    continue;
-  }
+const ids = Object.keys(PEXELS_PHOTO_ID_BY_PRODUCT).sort();
+for (const productId of ids) {
+  const photoId = PEXELS_PHOTO_ID_BY_PRODUCT[productId];
+  const url = pexelsPhotoJpegUrl(photoId);
   const res = await fetch(url, { headers: { Accept: 'image/*' } });
-  if (!res.ok) throw new Error(`${p.id}: GET ${res.status} ${url}`);
+  if (!res.ok) throw new Error(`${productId}: GET ${res.status} ${url}`);
   const buf = Buffer.from(await res.arrayBuffer());
-  const dest = join(outDir, `${p.id}.jpg`);
-  await writeFile(dest, buf);
-  console.log(`wrote ${p.id}.jpg (${buf.length} bytes)`);
+  await writeFile(join(outDir, `${productId}.jpg`), buf);
+  console.log(`wrote ${productId}.jpg (${buf.length} bytes) ← Pexels ${photoId}`);
 }

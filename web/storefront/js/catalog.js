@@ -3,7 +3,7 @@
  * When using `npm run dev`, keep this array in sync with `server/data/products.json`
  * (same ids and fields) until a build step or DB backs the API.
  *
- * Product photos are bundled under images/products/{id}.jpg (see scripts/download-product-images.mjs).
+ * Product photos: images/products/{id}.jpg — refresh via scripts/download-product-images.mjs (Pexels IDs in scripts/product-image-sources.mjs).
  */
 export const PRODUCTS = [
   {

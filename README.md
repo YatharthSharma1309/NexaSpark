@@ -65,6 +65,8 @@ npm run sync:catalog
 
 so `server/data/products.json` matches (source of truth for the API until you add a database).
 
+**Product JPEGs:** paths stay `images/products/p1.jpg` … `p12.jpg` in the catalog. To replace stock art, edit Pexels IDs in `scripts/product-image-sources.mjs`, then run `node scripts/download-product-images.mjs`.
+
 ## Intentional non-goals (demo scope)
 
 - **No real payments** — `POST /api/orders` creates a demo order only (see server comment).

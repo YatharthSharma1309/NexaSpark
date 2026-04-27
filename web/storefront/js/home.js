@@ -33,14 +33,30 @@ function dealPillLabel(title) {
   return `${title.slice(0, 22)}…`;
 }
 
+/** Home spotlight — same order as index hero tiles (.home-tile__img--1…8) and slide B/C art in style.css. */
+const FEATURED_PRODUCT_IDS = ['p1', 'p8', 'p6', 'p3', 'p7', 'p4', 'p9', 'p10'];
+
+function pickFeatured(products) {
+  const byId = new Map(products.map((p) => [p.id, p]));
+  return FEATURED_PRODUCT_IDS.map((id) => byId.get(id)).filter(Boolean);
+}
+
+/** Top discount % first, then review count as a tiebreaker. */
+function topDeals(products, limit = 4) {
+  return [...products]
+    .map((p) => ({ p, off: discountPct(p.mrp, p.price) }))
+    .sort((a, b) => b.off - a.off || b.p.reviews - a.p.reviews)
+    .slice(0, limit)
+    .map((x) => x.p);
+}
+
 const dealStrip = document.getElementById('deal-strip');
 const featured = document.getElementById('featured-grid');
 
 async function loadHome() {
   const products = await getProducts();
   if (dealStrip) {
-    dealStrip.innerHTML = products
-      .slice(0, 4)
+    dealStrip.innerHTML = topDeals(products, 4)
       .map(
         (p) =>
           `<a class="deal-pill" href="product.html?id=${encodeURIComponent(p.id)}">${escHtml(dealPillLabel(p.title))} · ${formatInr(
@@ -51,7 +67,8 @@ async function loadHome() {
   }
 
   if (featured) {
-    featured.innerHTML = products.map(card).join('');
+    const rows = pickFeatured(products);
+    featured.innerHTML = rows.length ? rows.map(card).join('') : products.map(card).join('');
   }
 }
 
