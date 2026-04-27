@@ -58,6 +58,16 @@ test('dev server: API health, key HTML, catalog JSON, first product image', asyn
       const ct = ir.headers.get('content-type') || '';
       assert.ok(ct.includes('image'), `${p.id} content-type: ${ct}`);
     }
+
+    const p1 = data.find((x) => x.id === 'p1');
+    assert.ok(
+      /^https:\/\/images\.pexels\.com\//i.test(String(p1?.image || '')),
+      'catalog p1 image should be Pexels HTTPS URL',
+    );
+    const staticImg = await fetch(`${origin}/images/products/p1.jpg`);
+    assert.equal(staticImg.status, 200, 'local static /images/products/p1.jpg');
+    const sct = staticImg.headers.get('content-type') || '';
+    assert.ok(sct.includes('image'), sct);
   } finally {
     proc.kill();
     await new Promise((r) => setTimeout(r, 400));

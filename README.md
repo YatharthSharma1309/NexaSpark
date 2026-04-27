@@ -65,7 +65,7 @@ npm run sync:catalog
 
 so `server/data/products.json` matches (source of truth for the API until you add a database).
 
-**Product JPEGs:** paths stay `images/products/p1.jpg` … `p12.jpg` in the catalog. To replace stock art, edit Pexels IDs in `scripts/product-image-sources.mjs`, then run `node scripts/download-product-images.mjs`. `productImageSrc` in `catalog.js` emits **document-relative** paths (same idea as `href="css/style.css"`), so product photos resolve at the site root, under a subpath (e.g. GitHub Pages), and when co-locating `images/` next to the HTML files. Client `fetch` calls use the same pattern (`api/products`, `api/cart`, …) so APIs stay on the same path segment as the storefront.
+**Product images:** the catalog uses **HTTPS URLs** on `images.pexels.com` (see `pexelsCatalogImageUrl` in `catalog.js`) so PLP/PDP/cart thumbnails load without relying on your host’s `/images` static files. Hero and home tiles in `css/style.css` use the same CDN links. To change art, edit Pexels photo IDs in `scripts/product-image-sources.mjs` (keep them in sync with `PEXELS_PHOTO_ID_BY_PRODUCT` in `catalog.js`), then run `npm run sync:catalog` and `node scripts/download-product-images.mjs` if you still want copies under `web/storefront/images/products/` for offline work or future self-hosting.
 
 ## Intentional non-goals (demo scope)
 

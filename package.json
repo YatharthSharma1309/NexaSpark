@@ -6,6 +6,7 @@
     "test": "node --test ./tests/web-smoke.test.mjs ./tests/dev-server-smoke.test.mjs ./tests/product-image-src.test.mjs",
     "dev": "node server/index.mjs",
     "sync:catalog": "node scripts/sync-catalog-to-server.mjs",
+    "verify:dev": "node scripts/verify-dev-server.mjs",
     "serve:web": "npx --yes serve web/storefront -p 8080"
   },
   "devDependencies": {

@@ -1,6 +1,7 @@
 /**
  * Pexels photo IDs used to refresh web/storefront/images/products/{id}.jpg
  * (free license: https://www.pexels.com/license/). IDs match each SKU’s category.
+ * Keep in sync with PEXELS_PHOTO_ID_BY_PRODUCT in web/storefront/js/catalog.js.
  */
 export const PEXELS_PHOTO_ID_BY_PRODUCT = {
   /* Featured-home spotlight (p1,p8,p6,p3,p7,p4,p9,p10) — refreshed art */

@@ -814,7 +814,7 @@ main {
   min-height: 12rem;
   border-radius: 4px;
   background-color: var(--elevated);
-  background-image: url('../images/products/p1.jpg');
+  background-image: url('https://images.pexels.com/photos/9890196/pexels-photo-9890196.jpeg?auto=compress&cs=tinysrgb&w=800');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -822,11 +822,11 @@ main {
 }
 
 .hero-slide__visual--b {
-  background-image: url('../images/products/p8.jpg');
+  background-image: url('https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=800');
 }
 
 .hero-slide__visual--c {
-  background-image: url('../images/products/p9.jpg');
+  background-image: url('https://images.pexels.com/photos/3028996/pexels-photo-3028996.jpeg?auto=compress&cs=tinysrgb&w=800');
 }
 
 .hero-carousel__arrow {
@@ -933,30 +933,30 @@ main {
   background: var(--elevated);
 }
 
-/* Department tiles mirror home featured spotlight: p1,p8,p6,p3,p7,p4,p9,p10 */
+/* Department tiles — Pexels CDN (same art as catalog.js) */
 .home-tile__img--1 {
-  background: var(--elevated) url('../images/products/p1.jpg') center/cover no-repeat;
+  background: var(--elevated) url('https://images.pexels.com/photos/9890196/pexels-photo-9890196.jpeg?auto=compress&cs=tinysrgb&w=800') center/cover no-repeat;
 }
 .home-tile__img--2 {
-  background: var(--elevated) url('../images/products/p8.jpg') center/cover no-repeat;
+  background: var(--elevated) url('https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=800') center/cover no-repeat;
 }
 .home-tile__img--3 {
-  background: var(--elevated) url('../images/products/p6.jpg') center/cover no-repeat;
+  background: var(--elevated) url('https://images.pexels.com/photos/15592489/pexels-photo-15592489.jpeg?auto=compress&cs=tinysrgb&w=800') center/cover no-repeat;
 }
 .home-tile__img--4 {
-  background: var(--elevated) url('../images/products/p3.jpg') center/cover no-repeat;
+  background: var(--elevated) url('https://images.pexels.com/photos/4066293/pexels-photo-4066293.jpeg?auto=compress&cs=tinysrgb&w=800') center/cover no-repeat;
 }
 .home-tile__img--5 {
-  background: var(--elevated) url('../images/products/p7.jpg') center/cover no-repeat;
+  background: var(--elevated) url('https://images.pexels.com/photos/33805706/pexels-photo-33805706.jpeg?auto=compress&cs=tinysrgb&w=800') center/cover no-repeat;
 }
 .home-tile__img--6 {
-  background: var(--elevated) url('../images/products/p4.jpg') center/cover no-repeat;
+  background: var(--elevated) url('https://images.pexels.com/photos/4195398/pexels-photo-4195398.jpeg?auto=compress&cs=tinysrgb&w=800') center/cover no-repeat;
 }
 .home-tile__img--7 {
-  background: var(--elevated) url('../images/products/p9.jpg') center/cover no-repeat;
+  background: var(--elevated) url('https://images.pexels.com/photos/3028996/pexels-photo-3028996.jpeg?auto=compress&cs=tinysrgb&w=800') center/cover no-repeat;
 }
 .home-tile__img--8 {
-  background: var(--elevated) url('../images/products/p10.jpg') center/cover no-repeat;
+  background: var(--elevated) url('https://images.pexels.com/photos/2909441/pexels-photo-2909441.jpeg?auto=compress&cs=tinysrgb&w=800') center/cover no-repeat;
 }
 
 .home-tile__cap {
