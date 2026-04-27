@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Running shoes">
-  <rect width="200" height="200" rx="16" fill="#fce4ec"/>
-  <path d="M48 124c28-8 52-4 72 8s40 12 56-4" fill="none" stroke="#c2185b" stroke-width="10" stroke-linecap="round"/>
-  <ellipse cx="100" cy="120" rx="64" ry="28" fill="none" stroke="#ad1457" stroke-width="6"/>
-  <path d="M56 112l-8-24" stroke="#880e4f" stroke-width="6" stroke-linecap="round"/>
-</svg>

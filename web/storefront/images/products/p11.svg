@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Computer mouse">
-  <rect width="200" height="200" rx="16" fill="#eceff1"/>
-  <ellipse cx="100" cy="108" rx="44" ry="64" fill="none" stroke="#2874f0" stroke-width="6"/>
-  <path d="M100 44v48" stroke="#1565c0" stroke-width="4"/>
-  <circle cx="100" cy="108" r="6" fill="#2874f0"/>
-</svg>

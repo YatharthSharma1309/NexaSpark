@@ -19,6 +19,7 @@ const required = [
   "js/catalog.js",
   "js/catalogApi.js",
   "js/nav.js",
+  "js/theme.js",
   "js/cart.js",
   "js/order.js",
   "js/account.js",

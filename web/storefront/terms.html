@@ -7,6 +7,9 @@
     <meta name="theme-color" content="#2874f0" />
     <title>Terms of Use — NexaSpark</title>
     <link rel="stylesheet" href="css/style.css" />
+    <script>
+      (function(){try{var k='nexaspark_theme',a=['light','warm','dark'];var v=localStorage.getItem(k);if(v&&a.indexOf(v)>=0)document.documentElement.setAttribute('data-theme',v);else document.documentElement.setAttribute('data-theme','light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -66,6 +69,14 @@
             <span class="header-tools__strong">More</span>
             <span class="header-tools__chev" aria-hidden="true"></span>
           </a>
+          <label class="theme-picker">
+            <span class="visually-hidden">Color theme</span>
+            <select class="theme-picker__select" data-theme-select aria-label="Color theme">
+              <option value="light">Classic</option>
+              <option value="warm">Warm</option>
+              <option value="dark">Dark</option>
+            </select>
+          </label>
           <a class="header-tools__cart cart-link" href="cart.html" aria-label="Shopping cart">
             <span class="header-tools__cart-inner">
               <span class="header-tools__cart-count" id="cart-count" hidden aria-live="polite"></span>
@@ -123,6 +134,7 @@
       </nav>
     </footer>
 
+    <script src="js/theme.js" defer></script>
     <script type="module">
       import { syncCartBadge } from './js/nav.js';
       syncCartBadge();

@@ -158,7 +158,17 @@ app.post('/api/orders', guestSession, cartJson, (req, res) => {
   res.status(201).json({ orderId, totalInr, items: lines, demo: true });
 });
 
-app.use(express.static(storefront, { index: 'index.html', extensions: ['html'] }));
+app.use(
+  express.static(storefront, {
+    index: 'index.html',
+    extensions: ['html'],
+    setHeaders(res, filePath) {
+      if (filePath.endsWith('.svg')) {
+        res.setHeader('Content-Type', 'image/svg+xml; charset=utf-8');
+      }
+    },
+  }),
+);
 
 app.listen(port, () => {
   console.log(

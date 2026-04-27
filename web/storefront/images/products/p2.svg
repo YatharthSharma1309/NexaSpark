@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Water bottle">
-  <rect width="200" height="200" rx="16" fill="#e0f2f1"/>
-  <rect x="78" y="48" width="44" height="100" rx="8" fill="none" stroke="#00897b" stroke-width="6"/>
-  <ellipse cx="100" cy="52" rx="24" ry="10" fill="none" stroke="#00695c" stroke-width="4"/>
-  <path d="M88 148h24" stroke="#004d40" stroke-width="4" stroke-linecap="round"/>
-</svg>

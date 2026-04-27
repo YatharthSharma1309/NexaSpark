@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Desk lamp">
-  <rect width="200" height="200" rx="16" fill="#fff8e1"/>
-  <path d="M100 40l-28 52h56z" fill="#ffc107" stroke="#f57c00" stroke-width="3"/>
-  <path d="M100 92v52" stroke="#5d4037" stroke-width="8"/>
-  <rect x="72" y="148" width="56" height="16" rx="4" fill="#5d4037"/>
-</svg>

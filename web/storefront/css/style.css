@@ -24,6 +24,61 @@
   /* Sticky bar is logo row only — subnav scrolls away */
   --header-offset: 5.75rem;
   --header-accent: #2874f0;
+  /* Hero / carousel (overridden per theme) */
+  --hero-viewport-bg: linear-gradient(180deg, #f5f6f8 0%, #f1f3f6 100%);
+  --hero-heading: #0f1111;
+  --carousel-arrow-bg: rgba(255, 255, 255, 0.78);
+  --carousel-arrow-border: rgba(0, 0, 0, 0.08);
+  --carousel-arrow-fg: #37474f;
+  --footer-bg: #172337;
+  --footer-link: #ffffff;
+}
+
+/* Warm — cream paper + terracotta accent */
+[data-theme='warm'] {
+  --page-bg: #f8f6f3;
+  --bg: #f8f6f3;
+  --surface: #fffdfa;
+  --elevated: #fff8f0;
+  --fk-blue: #bf360c;
+  --fk-blue-hover: #d84315;
+  --accent: #bf360c;
+  --accent-hover: #d84315;
+  --header-accent: #e65100;
+  --search-btn: #bf360c;
+  --search-btn-hover: #d84315;
+  --hero-viewport-bg: linear-gradient(180deg, #fff5eb 0%, #f8f6f3 100%);
+  --footer-bg: #3e2723;
+  --positive: #2e7d32;
+}
+
+/* Dark — OLED-friendly grays, cool accent */
+[data-theme='dark'] {
+  --page-bg: #121212;
+  --bg: #121212;
+  --surface: #1e1e1e;
+  --elevated: #2d2d2d;
+  --text: #ececec;
+  --muted: #9e9e9e;
+  --border: #3d3d3d;
+  --header-bg: #1e1e1e;
+  --header-nav: #1e1e1e;
+  --header-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --fk-blue: #64b5f6;
+  --fk-blue-hover: #90caf9;
+  --accent: #64b5f6;
+  --accent-hover: #90caf9;
+  --header-accent: #42a5f5;
+  --search-btn: #42a5f5;
+  --search-btn-hover: #64b5f6;
+  --hero-viewport-bg: linear-gradient(180deg, #23232b 0%, #121212 100%);
+  --hero-heading: #f5f5f5;
+  --carousel-arrow-bg: rgba(45, 45, 52, 0.88);
+  --carousel-arrow-border: rgba(255, 255, 255, 0.12);
+  --carousel-arrow-fg: #e0e0e0;
+  --footer-bg: #0d1117;
+  --footer-link: rgba(255, 255, 255, 0.92);
+  --star: #ffb300;
 }
 
 *,
@@ -418,6 +473,27 @@ a:hover {
   outline: 2px solid var(--fk-blue);
   outline-offset: 2px;
 }
+.theme-picker {
+  display: flex;
+  align-items: center;
+}
+.theme-picker__select {
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.32rem 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  max-width: 7rem;
+}
+.theme-picker__select:focus-visible {
+  outline: 2px solid var(--fk-blue);
+  outline-offset: 2px;
+}
+
 .header-tools__cart-inner {
   position: relative;
   display: inline-flex;
@@ -515,12 +591,13 @@ a:hover {
 
 @media (max-width: 72rem) {
   .header__row--primary {
-    grid-template-columns: 1fr 1fr;
+    /* Keep “Delivering to” on the top bar with logo + account/cart; full-width search below */
+    grid-template-columns: auto minmax(0, 15rem) auto;
     grid-template-areas:
-      'brand tools'
-      'location location'
-      'search search';
+      'brand location tools'
+      'search search search';
     align-items: center;
+    gap: 0.65rem 0.75rem;
   }
   .header__row--primary > * {
     min-width: 0;
@@ -531,9 +608,13 @@ a:hover {
     justify-self: stretch;
   }
   .header-location {
-    max-width: none;
-    width: auto;
     justify-self: start;
+    width: 100%;
+    max-width: 15rem;
+    align-self: center;
+  }
+  .header-location__value {
+    max-width: 100%;
   }
 }
 
@@ -659,7 +740,7 @@ main {
 
 .hero-carousel__viewport {
   overflow: hidden;
-  background: linear-gradient(180deg, #e8eaf6 0%, #f5f5f5 50%, #f1f3f6 100%);
+  background: var(--hero-viewport-bg);
 }
 
 .hero-carousel__track {
@@ -697,14 +778,14 @@ main {
   margin: 0 0 0.35rem;
   font-size: 0.95rem;
   font-weight: 700;
-  color: #0f1111;
+  color: var(--hero-heading);
 }
 
 .hero-slide__title {
   margin: 0 0 0.5rem;
   font-size: 1.65rem;
   line-height: 1.2;
-  color: #0f1111;
+  color: var(--hero-heading);
 }
 
 .hero-slide__sub {
@@ -748,26 +829,33 @@ main {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 2.5rem;
-  height: 6rem;
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.85);
-  font-size: 2rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--carousel-arrow-border);
+  border-radius: 50%;
+  background: var(--carousel-arrow-bg);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-size: 1.2rem;
   line-height: 1;
   cursor: pointer;
-  color: #0f1111;
+  color: var(--carousel-arrow-fg);
   z-index: 2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 .hero-carousel__arrow:hover {
-  background: #fff;
+  background: var(--carousel-arrow-bg);
+  filter: brightness(1.06);
 }
 .hero-carousel__prev {
-  left: 0.25rem;
-  border-radius: 0 3px 3px 0;
+  left: 0.5rem;
 }
 .hero-carousel__next {
-  right: 0.25rem;
-  border-radius: 3px 0 0 3px;
+  right: 0.5rem;
 }
 
 /* Feature grid (home) */
@@ -813,7 +901,7 @@ main {
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.35;
-  color: #0f1111;
+  color: var(--text);
 }
 
 .home-feature-card__tiles {
@@ -827,7 +915,7 @@ main {
   flex-direction: column;
   gap: 0.35rem;
   text-decoration: none !important;
-  color: #0f1111 !important;
+  color: var(--text) !important;
 }
 .home-tile:hover .home-tile__cap {
   color: var(--accent-hover);
@@ -869,7 +957,7 @@ main {
 .home-tile__cap {
   font-size: 0.78rem;
   line-height: 1.3;
-  color: #0f1111;
+  color: var(--text);
 }
 
 .home-feature-card__more {
@@ -983,6 +1071,7 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
 }
 
@@ -1131,9 +1220,9 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
 }
-
 .pdp-buy h1 {
   margin: 0 0 0.5rem;
   font-size: 1.35rem;
@@ -1309,13 +1398,13 @@ main {
 
 .site-footer--marketplace {
   max-width: none;
-  background: #172337;
-  color: #fff;
+  background: var(--footer-bg);
+  color: var(--footer-link);
   border-top: none;
   margin-top: 2rem;
 }
 .site-footer--marketplace a {
-  color: #fff !important;
+  color: var(--footer-link) !important;
   opacity: 0.85;
 }
 .site-footer--marketplace a:hover {
@@ -1342,7 +1431,7 @@ main {
 }
 
 .footer-links a {
-  color: #fff !important;
+  color: var(--footer-link) !important;
   opacity: 0.9;
   text-decoration: none !important;
 }
@@ -1399,17 +1488,6 @@ main {
   font-size: 4rem;
   margin: 0 0 0.5rem;
   color: var(--fk-blue);
-}
-
-.card__img img[src$='.svg'],
-.pdp-photo img[src$='.svg'] {
-  object-fit: contain;
-  background: linear-gradient(180deg, #fafbfc, #eceff1);
-}
-
-.cart-line__thumb[src$='.svg'] {
-  object-fit: contain;
-  background: var(--elevated);
 }
 
 /* —— Page shell (cart) —— */

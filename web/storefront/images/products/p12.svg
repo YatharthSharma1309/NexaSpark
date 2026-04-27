@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Yoga mat">
-  <rect width="200" height="200" rx="16" fill="#e8f5e9"/>
-  <ellipse cx="100" cy="100" rx="72" ry="28" fill="none" stroke="#388e3c" stroke-width="8"/>
-  <ellipse cx="100" cy="100" rx="56" ry="20" fill="none" stroke="#66bb6a" stroke-width="4"/>
-  <path d="M64 100c36-8 36-8 72 0" fill="none" stroke="#2e7d32" stroke-width="4"/>
-</svg>

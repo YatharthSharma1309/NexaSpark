@@ -1,4 +1,4 @@
-import { formatInr, discountPct, escAttr, escHtml } from './catalog.js';
+import { formatInr, discountPct, escAttr, escHtml, productImageSrc } from './catalog.js';
 import { getProductById } from './catalogApi.js';
 import { addToCart, scheduleServerCartSync, toggleWishlist, isWishlisted } from './cart.js';
 import { syncCartBadge } from './nav.js';
@@ -30,7 +30,7 @@ async function render() {
   const off = discountPct(p.mrp, p.price);
   document.title = `${p.title} — NexaSpark`;
   const heroImg = p.image
-    ? `<div class="pdp-photo"><img src="${p.image}" alt="${escAttr(p.title)}" width="600" height="600" loading="eager" decoding="async" /></div>`
+    ? `<div class="pdp-photo"><img src="${escAttr(productImageSrc(p.image))}" alt="${escAttr(p.title)}" width="600" height="600" loading="eager" decoding="async" /></div>`
     : '<div class="pdp-photo" aria-hidden="true"></div>';
   root.innerHTML = `
     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a> / <a href="products.html">Products</a> / <span>${escHtml(p.title)}</span></nav>

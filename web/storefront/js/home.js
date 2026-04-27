@@ -1,4 +1,4 @@
-import { formatInr, discountPct, escAttr, escHtml } from './catalog.js';
+import { formatInr, discountPct, escAttr, escHtml, productImageSrc } from './catalog.js';
 import { getProducts } from './catalogApi.js';
 import { syncCartBadge } from './nav.js';
 
@@ -12,7 +12,7 @@ function starRow(rating) {
 function card(p) {
   const off = discountPct(p.mrp, p.price);
   const img = p.image
-    ? `<div class="card__img"><img src="${p.image}" alt="${escAttr(p.title)}" loading="lazy" decoding="async" width="600" height="480" /></div>`
+    ? `<div class="card__img"><img src="${escAttr(productImageSrc(p.image))}" alt="${escAttr(p.title)}" loading="lazy" decoding="async" width="600" height="480" /></div>`
     : '<div class="card__img" aria-hidden="true"></div>';
   const badge = p.badge ? `<span class="badge">${escHtml(p.badge)}</span>` : '';
   return `<article class="card">

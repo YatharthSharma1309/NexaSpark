@@ -1,4 +1,4 @@
-import { formatInr, escAttr, escHtml } from './catalog.js';
+import { formatInr, escAttr, escHtml, productImageSrc } from './catalog.js';
 import { byId } from './catalogApi.js';
 import {
   getCart,
@@ -33,7 +33,7 @@ function render() {
       if (!p) return '';
       sub += p.price * line.qty;
       const thumb = p.image
-        ? `<img class="cart-line__thumb" src="${p.image}" alt="" width="64" height="64" loading="lazy" decoding="async" />`
+        ? `<img class="cart-line__thumb" src="${escAttr(productImageSrc(p.image))}" alt="" width="64" height="64" loading="lazy" decoding="async" />`
         : '';
       return `<div class="cart-line" data-id="${escAttr(p.id)}">
         <div class="cart-line__info">

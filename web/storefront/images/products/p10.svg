@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Backpack">
-  <rect width="200" height="200" rx="16" fill="#e8eaf6"/>
-  <path d="M100 44c-28 0-48 20-48 48v72h96v-72c0-28-20-48-48-48z" fill="none" stroke="#3949ab" stroke-width="6"/>
-  <path d="M100 44v24" stroke="#5c6bc0" stroke-width="8" stroke-linecap="round"/>
-  <rect x="78" y="96" width="44" height="40" rx="4" fill="none" stroke="#3949ab" stroke-width="4"/>
-</svg>
