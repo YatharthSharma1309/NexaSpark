@@ -28,7 +28,7 @@ async function run() {
   }
   let data;
   try {
-    const r = await fetch('/api/orders/mine', { cache: 'no-store' });
+    const r = await fetch('api/orders/mine', { cache: 'no-store' });
     if (!r.ok) throw new Error();
     data = await r.json();
   } catch {

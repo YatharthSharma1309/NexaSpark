@@ -46,12 +46,17 @@ test('dev server: API health, key HTML, catalog JSON, first product image', asyn
     assert.equal(pr.status, 200);
     const data = await pr.json();
     assert.ok(Array.isArray(data) && data.length);
-    const first = data[0];
-    assert.ok(first?.image, 'product has image field');
-    if (!/^https?:\/\//i.test(String(first.image))) {
-      const base = String(first.image).replace(/^\//, '');
-      const ir = await fetch(`http://127.0.0.1:${port}/${base}`);
-      assert.equal(ir.status, 200, `image ${base}`);
+    const origin = `http://127.0.0.1:${port}`;
+    for (const p of data) {
+      assert.ok(p?.image, `${p?.id || '?'} missing image`);
+      const img = String(p.image).trim();
+      if (/^https?:\/\//i.test(img)) continue;
+      const rel = img.replace(/^\/+/, '');
+      const url = new URL(rel, `${origin}/`).href;
+      const ir = await fetch(url);
+      assert.equal(ir.status, 200, `${p.id} image ${url}`);
+      const ct = ir.headers.get('content-type') || '';
+      assert.ok(ct.includes('image'), `${p.id} content-type: ${ct}`);
     }
   } finally {
     proc.kill();

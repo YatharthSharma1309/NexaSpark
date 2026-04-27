@@ -31,7 +31,7 @@ async function run() {
   }
   let data;
   try {
-    const r = await fetch(`/api/orders/${encodeURIComponent(id)}`);
+    const r = await fetch(`api/orders/${encodeURIComponent(id)}`);
     if (r.status === 404) {
       root.innerHTML =
         '<p role="alert" class="order-panel order-panel--muted">Order not found, or you are not allowed to view it. <a href="products.html">Shop</a></p>';

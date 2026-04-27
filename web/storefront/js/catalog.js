@@ -184,19 +184,16 @@ export function byId(id) {
 }
 
 /**
- * Resolve catalog image paths for <img src> from the current page URL.
- * Avoids broken relative URLs when the document path differs (e.g. nested routes, subfolders).
+ * Document-relative <img src> for catalog paths (e.g. images/products/p1.jpg).
+ * Resolved against the current HTML URL, so the same markup works at the site root,
+ * under a subpath (GitHub Pages, /shop/), and when opening files under web/storefront/.
+ * Leading slashes are stripped so stored paths stay portable.
  */
 export function productImageSrc(path) {
   if (path == null || path === '') return '';
-  const s = String(path).trim();
+  let s = String(path).trim().replace(/\\/g, '/');
   if (/^https?:\/\//i.test(s) || s.startsWith('data:')) return s;
-  if (typeof window === 'undefined' || !window.location?.href) return s;
-  try {
-    return new URL(s, window.location.href).href;
-  } catch {
-    return s;
-  }
+  return s.replace(/^\/+/, '');
 }
 
 /** Escape for use in HTML attribute values (e.g. img alt). */

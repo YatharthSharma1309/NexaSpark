@@ -79,7 +79,7 @@ checkoutBtn?.addEventListener('click', async () => {
   if (!cart.items.length) return;
   if (await isCartApiAvailable()) {
     try {
-      const r = await fetch('/api/orders', {
+      const r = await fetch('api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(cart),

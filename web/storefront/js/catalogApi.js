@@ -1,5 +1,5 @@
 /**
- * Product catalog access — fetches from /api when available, falls back to catalog.js
+ * Product catalog access — fetches from api/products when available, falls back to catalog.js
  * (static `serve:web` on port 8080 has no /api). Run `npm run dev` for API + static on one port.
  *
  * Caches the resolved product list for the page lifetime and uses an O(1) id map for lookups.
@@ -13,6 +13,13 @@ let idToProduct = new Map(PRODUCTS.map((p) => [p.id, p]));
 let cachedList = null;
 let listInflight = null;
 const jsonHeaders = { Accept: 'application/json' };
+
+/** @param {object} p */
+function normalizeProduct(p) {
+  if (!p || typeof p !== 'object') return p;
+  const image = p.image == null ? p.image : String(p.image).trim().replace(/\\/g, '/');
+  return image === p.image ? p : { ...p, image };
+}
 
 /**
  * Resolve id against the current id map (bundled and/or API data).
@@ -30,13 +37,14 @@ export async function getProducts() {
   if (listInflight) return listInflight;
   listInflight = (async () => {
     try {
-      const r = await fetch('/api/products', { headers: jsonHeaders, cache: 'default' });
+      const r = await fetch('api/products', { headers: jsonHeaders, cache: 'default' });
       if (r.ok) {
         const data = await r.json();
         if (Array.isArray(data) && data.length) {
-          idToProduct = new Map(data.map((p) => [p.id, p]));
-          cachedList = data;
-          return data;
+          const rows = data.map(normalizeProduct);
+          idToProduct = new Map(rows.map((p) => [p.id, p]));
+          cachedList = rows;
+          return rows;
         }
       }
     } catch {
@@ -60,10 +68,10 @@ export async function getProductById(id) {
   await getProducts();
   if (idToProduct.has(key)) return idToProduct.get(key);
   try {
-    const r = await fetch(`/api/products/${encodeURIComponent(key)}`, { headers: jsonHeaders });
+    const r = await fetch(`api/products/${encodeURIComponent(key)}`, { headers: jsonHeaders });
     if (r.status === 404) return undefined;
     if (r.ok) {
-      const p = await r.json();
+      const p = normalizeProduct(await r.json());
       if (p && p.id) idToProduct.set(p.id, p);
       return p;
     }

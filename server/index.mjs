@@ -166,6 +166,11 @@ app.use(
       if (filePath.endsWith('.svg')) {
         res.setHeader('Content-Type', 'image/svg+xml; charset=utf-8');
       }
+      if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) {
+        res.setHeader('Content-Type', 'image/jpeg');
+        /* Avoid stale product art in the browser while iterating on images */
+        res.setHeader('Cache-Control', 'no-store');
+      }
     },
   }),
 );

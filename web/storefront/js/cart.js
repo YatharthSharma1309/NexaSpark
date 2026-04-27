@@ -98,7 +98,7 @@ export function isWishlisted(id) {
   return getWishlist().includes(id);
 }
 
-/* --- Optional sync with /api/cart (same origin, e.g. `npm run dev`) --- */
+/* --- Optional sync with api/cart (same origin as HTML, e.g. `npm run dev`) --- */
 let serverCartApiOk = null;
 /** @type {Promise<boolean> | null} */
 let healthPromise = null;
@@ -106,7 +106,7 @@ let healthPromise = null;
 export async function isCartApiAvailable() {
   if (serverCartApiOk !== null) return serverCartApiOk;
   if (healthPromise) return healthPromise;
-  healthPromise = fetch('/api/health', { method: 'GET', cache: 'no-store' })
+  healthPromise = fetch('api/health', { method: 'GET', cache: 'no-store' })
     .then((r) => {
       serverCartApiOk = r.ok;
       return serverCartApiOk;
@@ -128,7 +128,7 @@ export async function pushCartToServer() {
   if (!(await isCartApiAvailable())) return;
   const cart = getCart();
   try {
-    await fetch('/api/cart', {
+    await fetch('api/cart', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(cart),
@@ -156,7 +156,7 @@ export async function syncCartOnPageLoad() {
   if (!(await isCartApiAvailable())) return;
   let data;
   try {
-    const r = await fetch('/api/cart', { cache: 'no-store' });
+    const r = await fetch('api/cart', { cache: 'no-store' });
     if (!r.ok) return;
     data = await r.json();
   } catch {

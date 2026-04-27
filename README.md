@@ -37,7 +37,7 @@ Open http://127.0.0.1:8080 (use a local server — ES modules need `http`, not `
 - `GET /api/orders/mine` — recent demo orders for the current `nexaspark_sid` (used by `account.html`).
 - `GET /api/orders/:orderId` — only for the same `nexaspark_sid` that placed the order. Use `order.html?id=...` after checkout.
 
-`catalogApi.js` loads from `/api/products` when present, else from `catalog.js`.
+`catalogApi.js` loads from `api/products` when present, else from `catalog.js`.
 
 ## Test
 
@@ -65,7 +65,7 @@ npm run sync:catalog
 
 so `server/data/products.json` matches (source of truth for the API until you add a database).
 
-**Product JPEGs:** paths stay `images/products/p1.jpg` … `p12.jpg` in the catalog. To replace stock art, edit Pexels IDs in `scripts/product-image-sources.mjs`, then run `node scripts/download-product-images.mjs`.
+**Product JPEGs:** paths stay `images/products/p1.jpg` … `p12.jpg` in the catalog. To replace stock art, edit Pexels IDs in `scripts/product-image-sources.mjs`, then run `node scripts/download-product-images.mjs`. `productImageSrc` in `catalog.js` emits **document-relative** paths (same idea as `href="css/style.css"`), so product photos resolve at the site root, under a subpath (e.g. GitHub Pages), and when co-locating `images/` next to the HTML files. Client `fetch` calls use the same pattern (`api/products`, `api/cart`, …) so APIs stay on the same path segment as the storefront.
 
 ## Intentional non-goals (demo scope)
 
